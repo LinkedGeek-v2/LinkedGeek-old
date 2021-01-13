@@ -1,0 +1,232 @@
+﻿@{
+    ViewBag.Title = "Profile Page";
+}
+
+<h2>Profile Page</h2>
+
+<div class="container">
+
+    <div class="panel-group">
+
+        @*PROFILE PIC*@
+        <div class="panel panel-default row">
+            <div id="profilePic" class="col-md-3">
+                <img id="profilePic2" style="width:160px;height:160px; background: #FFFFFF;
+                margin: auto;
+                -moz-border-radius: 60px;
+                border-radius: 100px;
+                padding: 6px;
+                box-shadow: 0px 0px 20px #888;" />
+            </div>          
+        </div>
+
+        @*DETAILS*@
+        <div class="panel panel-default row">
+            <div class="panel-body devDetails">
+
+
+            </div>
+        </div>
+
+
+        <img id="important-img" src="~/Images/2222-removebg-preview.png" />
+    </div>
+
+
+ </div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $("#profilePic2").attr("src", `@Url.Action("UserPhotos", "Developer")`);
+
+            $.ajax({
+                url: "/devProfile/show",
+                method: "GET",
+                success: function (data) {
+                    let devDetails = $(".devDetails");
+                    devDetails.append("<h3><strong>Details</strong></h3>");
+                    devDetails.append("<h4><strong>Full Name</strong> : " + data.fullName + "</h4");
+                    devDetails.append("<h4><strong>Age</strong> : " + data.age + "</h4");
+                    devDetails.append("<h4><strong>Phone</strong> : " + data.user.phoneNumber + "</h4");
+                    devDetails.append("<h4><strong>Gender</strong> : " + data.gender + "</h4");
+
+                    if (data.user.address) {
+                        $("#have-address").hide();
+                        $(".panel-group").append("<div class='panel panel-default row'> <div class= 'panel-body devAddress'> </div></div>");
+                        let devAddress = $(".devAddress");
+                        devAddress.append("<h3><strong>Address</strong></h3>");
+                        devAddress.append("<h4 style='display: inline - block'><strong>Street</strong> :" + data.user.address.streetName + "</h4>");
+                        devAddress.append("<h4 style='display: inline - block'><strong>No</strong> :" + data.user.address.streetNumber + "</h4>");
+                        devAddress.append("<h4><strong>City</strong> :" + data.user.address.city.cityName + "</h4>");
+                        devAddress.append("<h4><strong>Country</strong> :" + data.user.address.city.country.countryName + "</h4>");
+                    }
+
+
+                    // EDUCATION  PANEL
+
+                    if (data.educations.length > 0) {
+                        $(".panel-group").append("<div class='panel panel-default row'> <div class= 'panel-body devEduPanel'> </div></div>");
+
+                        //Create table
+
+                        let devEduPanel = $(".devEduPanel");
+                        devEduPanel.append("<h3><strong>Educations</strong></h3>");
+
+                        let edutable = $('<table>').addClass("table table-bordered table-hover").attr("id", "edutable");
+
+                        let thead = $('<thead>').addClass("thead");
+
+                        let theadTr = $('<tr>');
+
+                        let theadTrTh1 = $('<th>').text("School");
+                        let theadTrTh2 = $('<th>').text("Degree");
+                        let theadTrTh3 = $('<th>').text("Field");
+                        let theadTrTh4 = $('<th>').text("Grade");
+                        let theadTrTh5 = $('<th>').text("Started In");
+                        let theadTrTh6 = $('<th>').text("Ended In");
+
+                        theadTr.append(theadTrTh1, theadTrTh2, theadTrTh3, theadTrTh4, theadTrTh5, theadTrTh6);
+
+                        thead.append(theadTr);
+
+                        edutable.append(thead);
+
+                        let tbody = $('<tbody>').addClass("devEducation");
+
+                        edutable.append(tbody);
+
+                        devEduPanel.append(edutable);
+
+                        let devEducation = $(".devEducation");
+
+                        let row;
+                        for (var education of data.educations) {
+
+                            row = $('<tr>').attr("id", "Edu" + education.educationID);
+                            let prop = $('<td>').text(education.school);
+                            let prop1 = $('<td>').text(education.degree);
+                            let prop2 = $('<td>').text(education.field);
+                            let prop3 = $('<td>').text(education.grade);
+                            let prop4 = $('<td>').text(moment(education.startYear).format("DD-MMM-yyyy"));
+                            let prop5 = $('<td>').text(moment(education.endYear).format("DD-MMM-yyyy"));
+
+                            row.append(prop, prop1, prop2, prop3, prop4, prop5);
+                            devEducation.prepend(row);
+                        };
+
+                    }
+
+
+                    // fill page with experience
+
+                    if (data.experiences.length > 0) {
+                        $(".panel-group").append("<div class='panel panel-default row'> <div class= 'panel-body devExpPanel'> </div></div>");
+
+                        //Create table
+                        let devExpPanel = $(".devExpPanel");
+                        devExpPanel.append("<h3><strong>Experiences</strong></h3>");
+
+                        let exptable = $('<table>').addClass("table table-bordered table-hover").attr("id", "exptable");
+
+                        let thead = $('<thead>').addClass("thead");
+
+                        let theadTr = $('<tr>');
+
+                        let theadTrTh1 = $('<th>').text("Job Title");
+                        let theadTrTh2 = $('<th>').text("Company");
+                        let theadTrTh3 = $('<th>').text("Location");
+                        let theadTrTh4 = $('<th>').text("Started In");
+                        let theadTrTh5 = $('<th>').text("Ended In");
+                        let theadTrTh6 = $('<th>').text("Working Type");
+
+
+                        theadTr.append(theadTrTh1, theadTrTh2, theadTrTh3, theadTrTh4, theadTrTh5, theadTrTh6);
+
+                        thead.append(theadTr);
+
+                        exptable.append(thead);
+
+                        let tbody = $('<tbody>').addClass("devExperience");
+
+                        exptable.append(tbody);
+
+                        devExpPanel.append(exptable);
+
+                        let devExperience = $(".devExperience");
+
+                        let row;
+                        for (var experience of data.experiences) {
+
+                            row = $('<tr>').attr("id", "Exp" + experience.experienceID);
+                            let prop = $('<td>').text(experience.jobTitle);
+                            let prop1 = $('<td>').text(experience.companyName);
+                            let prop2 = $('<td>').text(experience.companyLocation);
+                            let prop3 = $('<td>').text(moment(experience.startYear).format("DD-MMM-yyyy"));
+                            let prop4 = $('<td>').text(moment(experience.endYear).format("DD-MMM-yyyy"));
+                            let prop5 = $('<td>').text(experience.experienceType);
+
+                            row.append(prop, prop1, prop2, prop3, prop4, prop5);
+
+                            devExperience.prepend(row);
+                        };
+
+                    }
+
+
+                    //fill page with skills
+
+                    if (data.developerSkills.length > 0) {
+                        $(".panel-group").append("<div class='panel panel-default row'> <div class= 'panel-body devSkillPanel'> </div></div>");
+
+                        //Create table
+                        let devSkillPanel = $(".devSkillPanel");
+                        devSkillPanel.append("<h3><strong>Skills</strong></h3>");
+
+                        let skilltable = $('<table>').addClass("table table-bordered table-hover").attr("id", "skillTable");
+
+                        let thead = $('<thead>').addClass("thead");
+
+                        let theadTr = $('<tr>');
+
+                        let theadTrTh1 = $('<th>').text("Skill");
+
+                        theadTr.append(theadTrTh1);
+
+                        thead.append(theadTr);
+
+                        skilltable.append(thead);
+
+                        let tbody = $('<tbody>').addClass("devSkill");
+
+                        skilltable.append(tbody);
+
+                        devSkillPanel.append(skilltable);
+
+                        let devSkill = $(".devSkill");
+
+
+                        let row;
+                        for (var entry of data.developerSkills) {
+
+                            row = $('<tr>');
+                            let prop = $('<td>').text(entry.skill.skillName);
+
+                            row.append(prop);
+
+                            devSkill.prepend(row);
+                        };
+
+                    }
+
+
+                }
+
+            });
+
+
+
+        });
+
+    </script>
+}

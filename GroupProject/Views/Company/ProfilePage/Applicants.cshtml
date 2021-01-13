@@ -1,0 +1,28 @@
+﻿@model IEnumerable<GroupProject.ViewModels.CompanyViewModels.CompanyApplicantsViewModel>
+
+<div class="table-responsive">
+    <table id="applicantsTable" class="table table-bordered table-hover text-center">
+        <thead>
+            <tr>
+                <th class="text-center">Lastname</th>
+                <th class="text-center">Firstname</th>
+                <th class="text-center">Age</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var applicant in Model)
+            {
+                <tr>
+                    <td>@applicant.LastName</td>
+                    <td>@applicant.FirstName</td>
+                    <td>@applicant.Age</td>
+                    <td>
+                        <button id="@applicant.DeveloperID" class="btn btn-sm btn-success acceptApplicant">Accept</button>
+                        <button id="@applicant.DeveloperID" class="btn btn-sm btn-danger rejectApplicant">Reject</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

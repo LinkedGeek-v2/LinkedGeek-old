@@ -1,0 +1,273 @@
+﻿
+
+@{
+    ViewBag.Title = "HomePage";
+}
+
+
+    <div class="homepage">
+        <br />
+        <br />
+        <div id="create-post">
+            <div class="first-row">
+                <textarea id="input-text">What do you want to say?</textarea>
+                <div id="uploadedfile-content">
+                    <img id="uploadedImage" />
+
+                </div>
+            </div>
+            <div class="second-row">
+                <form id="postform">
+                    <div class="first-col">
+                        <input type="file" name="PostImg" class="fileUpload" id="uploadImg-input" accept=".png,.jpg,.jpeg,.gif,.tif" placeholder="UpladImg"
+                               src="~/Images/upload_img.png" />
+                        <input type="file" name="PostVid" class="fileUpload" id="uploadVid-input" accept="video/mp4,video/x-m4v,video/*"
+                               src="~/Images/upload_video.png" />
+                    </div>
+                    <div class="second-col">
+                        <input type="submit" name="name" value="submit" />
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+        <hr />
+        <div id="feed">
+
+            @*<div class="post">
+                    <section class="post-header">
+
+                        <div class="post-profilepic">
+                            <img userId="" class="img-circle" src="~/Images/UserProfilePics/NoImageFemale.jpg" />
+                        </div>
+
+                        <div class="post-details">
+                            <div class="user-details">
+
+
+                                <h4 userId="" class="user-name"><bold>Jessica Cortez</bold></h4>
+                                <h6 class="user-otherdetails">Works at Ubisoft</h6>
+                            </div>
+
+                            <span class="date">15 feb, 12:00pm</span>
+                        </div>
+
+                    </section>
+                    <section class="post-body">
+                        <div class="uploaded-text">
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nisl eros,
+                                pulvinar facilisis justo mollis, auctor consequat urna. Morbi a bibendum metus.
+                                Donec scelerisque sollicitudin enim eu venenatis. Duis tincidunt laoreet ex,
+                                in pretium orci vestibulum eget. Class aptent taciti sociosqu ad litora torquent
+                                per conubia nostra, per inceptos himenaeos. Duis pharetra luctus lacus ut
+                                vestibulum. Maecenas ipsum lacus, lacinia quis posuere ut, pulvinar vitae dolor.
+                            </p>
+                        </div>
+                        <div class="uploaded-image">
+                            <img src="~/Images/omg-tech-pic.jpg" />
+                        </div>
+
+                    </section>
+                </div>
+
+            </div>*@
+
+        </div>
+
+
+
+        <script>
+            $(document).ready(function () {
+
+
+                let imagebase64;
+
+                SetTextAreaHandlers();
+                SetImageUploadHandler();
+                SetSubmitPostHandler();
+                RefreshPosts();
+
+
+                function SetSubmitPostHandler() {
+                    $("#postform").submit(SubmitPost);
+                }
+
+
+
+                function SubmitPost(event) {
+                    event.preventDefault();
+                    let text = $("#input-text").val();
+                    text = text != "What do you want to say?" ? text : null;
+                    if (text == null && imagebase64 == null)
+                        return Promise.reject();
+                    $.post("/api/posts/createpost", { ImageBase64: imagebase64, Text: text, DatePosted: new Date(Date.now()).toJSON() })
+                        .done(function () {
+                            alert("success")
+                        })
+                        .then(ClearImageUploaded)
+                        .then(ResetTextUploaded)
+                        .then(RefreshPosts)
+                        .fail(function () {
+                            alert("Something failed");
+                        });
+                }
+
+                function SetImageUploadHandler() {
+                    $("#uploadImg-input").change(ShowImageUploaded);
+
+                }
+                function ShowImageUploaded(event) {
+                    event.preventDefault();
+
+                    let file = $("#uploadImg-input")[0].files[0];
+
+                    //use a reader to convert the file to a URL containing the data (base64string)
+                    let reader = new FileReader();
+                    reader.onloadend = function (event) {
+                        //imagebase64 = removeBase64Header(reader.result);
+                        imagebase64 = reader.result;
+                        $("#uploadedImage").attr("src", reader.result);
+                    }
+                    reader.readAsDataURL(file);
+                }
+                function ClearImageUploaded() {
+                    $("#uploadedImage").removeAttr("src");
+                }
+
+                function ResetTextUploaded() {
+                    $("#input-text").val("What do you want to say?");
+                }
+
+                function SetTextAreaHandlers() {
+                    let postedText = $("#input-text");
+                    console.log("debugging?");
+
+                    postedText.focus(function (event) {
+                        if ($(event.target).val() == "What do you want to say?")
+                            $(event.target).val("");
+
+                    });
+                    postedText.blur(function (e) {
+                        if ($(e.target).val().trim() == "") {
+                            $(e.target).val("What do you want to say?");
+                        }
+                    });
+                    postedText.keydown(UpdateTextAreaHeight);
+                };
+
+                function UpdateTextAreaHeight(event) {
+
+                    $(this).css("height", ""); //reset the height
+                    $(this).css("height", $(this).prop('scrollHeight') + "px");
+                }
+
+                function RefreshPosts() {
+                    console.log("Inside refresh posts");
+                    $.get("/api/posts/getuserposts", function (data) {
+                        console.log("Executed");
+                        $("#feed").empty();
+                        data.forEach(AddPostToDOM);
+
+                    }).fail(() => alert("Something went wrong"));
+                }
+                function ReadableDateString(date) {
+                    return (date.getUTCDate() + 1) + " " + (date.getUTCMonth() + 1) + " " + (date.getUTCFullYear()) + ", at "
+                        + (date.getUTCHours()) + "." + (date.getUTCMinutes());
+                }
+                function TimePassed(date) {
+                    let now = new Date(Date.now());
+
+                    let yearDiff = now.getUTCFullYear() - date.getUTCFullYear();
+                    let monthDiff = now.getUTCMonth() - date.getUTCMonth();
+                    let dayDiff = now.getUTCDate() - date.getUTCDate();
+                    let hourDiff = now.getUTCHours() - date.getUTCHours();
+                    let minuteDiff = now.getUTCMinutes() - date.getUTCMinutes();
+
+                    console.log("hour diff:" + hourDiff);
+
+                    if (yearDiff > 0)
+                        return yearDiff + (yearDiff > 1 ? " years ago" : " year ago");
+
+                    else if (monthDiff > 0)
+                        return monthDiff + (monthDiff > 1 ? " months ago" : " month ago");
+
+                    else if (dayDiff > 0)
+                        return dayDiff + (dayDiff > 1 ? " days ago" : " day ago");
+
+                    else if (hourDiff > 0)
+                        return hourDiff + (hourDiff > 1 ? " hours ago" : " hour ago");
+
+                    else if (minuteDiff > 0)
+                        return minuteDiff + (minuteDiff > 1 ? " minutes ago" : " minute ago");
+                    else
+                        return "a few moments ago";
+
+
+                }
+                function AddPostToDOM(post) {
+                    console.log(new Date(Date.now()));
+                    let feed = $("#feed");
+                    let postDate = TimePassed(new Date(post.datePosted));
+
+                    let postTemplate = `
+                            <div class="post">
+                                <section class="post-header">
+
+                                    <div class="post-profilepic">
+                                        <img userId="${post.userId}" class="img-circle" src="${post.userImageBase64}" />
+                                    </div>
+
+                                    <div class="post-details">
+                                        <div class="user-details">
+
+
+                                            <h4 userId="${post.userId}" class="user-name"><bold>${post.name}</bold></h4>
+                                            <h6 class="user-otherdetails">`;
+                    if (post.description != null) {
+                        postTemplate += `${post.description}</h6>`;
+                    }
+
+                    postTemplate +=
+                        `</div>
+                                        <span class="date">${postDate}</span>
+                                    </div>
+
+                                </section>
+                                <section class="post-body">
+                                    <div class="uploaded-text">
+                                        <p>
+                                            ${post.text}
+                                        </p>
+                                    </div>
+                                    <div class="uploaded-image">`;
+                    if (post.postImageBase64 != null) {
+                        postTemplate +=
+                            `<img src="${post.postImageBase64}" />`;
+                    }
+
+                    postTemplate +=
+                        `</div>
+
+                                </section>
+                            </div>
+`;
+                    feed.append(postTemplate);
+
+                }
+
+            });
+
+
+        </script>
+
+
+
+
+
+    </div>
+
+
+
+

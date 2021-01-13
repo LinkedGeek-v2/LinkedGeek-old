@@ -1,0 +1,189 @@
+﻿@model GroupProject.ViewModels.DeveloperViewModels.ProfilePageViewModels.DeveloperProfilePageViewModel
+
+@{
+    ViewBag.Title = "DeveloperProfilePage";
+}
+
+<div class="container profile-page-container">
+    <div class="panel-group">
+        <div class="panel panel-default row">
+            <div class="profile-images">
+                <div class="background-profile-page-image">
+                    <img id="background-pic" src="~/Images/UserProfilePics/bg-image.jpg" />
+                </div>
+                <div id="profilePic">
+                    <label for="fileUpload">
+                        <img id="profilePic2" />
+                    </label>
+                </div>
+            </div>
+
+            <div class="profileDetails">
+                <div class="devDetails">
+                    <span id="fullName"><strong>@Html.DisplayFor(m => m.FullName)</strong></span>
+                    <div>
+                        <span id="currentlyWorkingJobTitle">@Html.DisplayFor(m => m.CurrentJobTitle)</span>
+                        <strong id="currentlyWorkingCompanyName">@Html.DisplayFor(m => m.WorksAt)</strong>
+                    </div>
+                    <div>
+                        <span id="adrCity">@Html.DisplayFor(m => m.User.Address.City.CityName)</span>
+                        <strong id="adrCountry">@Html.DisplayFor(m => m.User.Address.City.Country.CountryName)</strong>
+                    </div>
+                    <span><i>@Html.DisplayFor(m => m.User.UserName)</i></span>
+                    <span><i>@Html.DisplayFor(m => m.Age)</i></span>
+                    <span><i>@Html.DisplayFor(m => m.User.FollowersCount)</i></span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="panel-group">
+            <div class="panel panel-default row devEdu">
+                <div class="eduHeader  @(Model.Educations.Count != 0 ? "": "hidden")">
+                    <div class="eduHeader2">
+                        <h3><strong>Education</strong></h3>
+                    </div>
+                    <hr class="headerHr" />
+                </div>
+                <div class="devEduBody">
+                    @if (Model.Educations.Count != 0)
+                    {
+
+                        for (int i = 0; i < Model.Educations.Count; i++)
+                        {
+                            <div class="Edu-@Model.Educations[i].EducationID">
+                                <div class="devEducation">
+                                    <div class="dev-parent" id='Edu-@Model.Educations[i].EducationID'>
+                                        <div class="dev-child">
+                                            @Html.LabelFor(m => m.Educations[i].School)
+                                            @Html.DisplayFor(m => m.Educations[i].School)
+                                            @Html.LabelFor(m => m.Educations[i].Degree)
+                                            @Html.DisplayFor(m => m.Educations[i].Degree)
+                                            <br />
+                                            @Html.LabelFor(m => m.Educations[i].Field)
+                                            @Html.DisplayFor(m => m.Educations[i].Field)
+                                            @if (Model.Educations[i].Grade.HasValue)
+                                            {
+                                                @Html.LabelFor(m => m.Educations[i].Grade)
+                                                @Html.DisplayFor(m => m.Educations[i].Grade)
+                                            }
+                                            <br />
+                                            @Html.LabelFor(m => m.Educations[i].StartYear)
+                                            @Html.DisplayFor(m => m.Educations[i].StartYear)
+                                            <br />
+                                            @Html.LabelFor(m => m.Educations[i].EndYear)
+                                            @Html.DisplayFor(m => m.Educations[i].EndYear)
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <hr class="rowHr" />
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-group">
+            <div class="panel panel-default row devExp">
+                <div class="expHeader  @(Model.Experiences.Count != 0 ? "": "hidden")">
+                    <div class="expHeader2">
+                        <h3><strong>Experience</strong></h3>
+                    </div>
+                    <hr class="headerHr" />
+                </div>
+                <div class="devExpBody">
+                    @if (Model.Experiences.Count != 0)
+                    {
+
+                        for (int i = 0; i < Model.Experiences.Count; i++)
+                        {
+                            <div class="Exp-@Model.Experiences[i].ExperienceID">
+                                <div class="devExperience">
+                                    <div class="dev-parent" id='Exp-@Model.Experiences[i].ExperienceID'>
+                                        <div class="dev-child">
+                                            @Html.LabelFor(m => m.Experiences[i].JobTitle)
+                                            <span>@Html.DisplayFor(m => m.Experiences[i].JobTitle)</span>
+                                            @Html.LabelFor(m => m.Experiences[i].CompanyName)
+                                            @if (Model.Experiences[i].CompanyWorkingID != null)
+                                            {
+                                                @Html.ActionLink(Model.Experiences[i].CompanyName, "OtherCompProfilePage", "OtherCompanyProfilePage", new { id = Model.Experiences[i].CompanyWorkingID }, null)
+                                            }
+                                            else
+                                            {
+                                                <span>@Html.DisplayFor(m => m.Experiences[i].CompanyName)</span>
+                                            }
+                                            <br />
+                                            @Html.LabelFor(m => m.Experiences[i].StartYear)
+                                            <span>@Html.DisplayFor(m => m.Experiences[i].StartYear)</span>
+                                            @Html.LabelFor(m => m.Experiences[i].EndYear)
+                                            <span>@Html.DisplayFor(m => m.Experiences[i].EndYear)</span>
+                                            <br />
+                                            @Html.LabelFor(m => m.Experiences[i].ExperienceType)
+                                            <span>@Html.DisplayFor(m => m.Experiences[i].ExperienceType)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="rowHr" />
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+
+        </div>
+
+        <div class="panel-group">
+            <div class="panel panel-default row devSkills">
+                <div class="skillHeader  @(Model.DeveloperSkills.Count != 0 ? "": "hidden")">
+                    <div class="skillHeader2">
+                        <h3><strong>Skills</strong></h3>
+                    </div>
+                    <hr class="headerHr" />
+                </div>
+                <div class="devSkillBody">
+                    @if (Model.DeveloperSkills.Count != 0)
+                    {
+
+                        for (int i = 0; i < Model.DeveloperSkills.Count; i++)
+                        {
+                            <div class="Skill-@Model.DeveloperSkills[i].SkillID">
+                                <div class="devSkill">
+                                    <div class="dev-parent" id='Skill-@Model.DeveloperSkills[i].SkillID'>
+
+                                        <div class="dev-child">  <span>@Html.DisplayFor(m => m.DeveloperSkills[i].Skill.SkillName)</span></div>
+
+                                    </div>
+                                </div>
+                                <hr class="rowHr" />
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+@section scripts {
+    <script src="~/Scripts/HomePageAC/Services/networkService.js"></script>
+    <script src="~/Scripts/HomePageAC/Controllers/imageSelectionController.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $("#profilePic2").attr("src", `@Html.Action("UserPhotos", "User")`);
+
+            new ProfileImageSelectionController('#fileUpload', '#profilePic2');
+
+            new ProfileImageSelectionController('#bg-fileUpload', '#background-pic');
+
+        });  //DOCUMENT READY FINISH
+
+    </script>
+
+}

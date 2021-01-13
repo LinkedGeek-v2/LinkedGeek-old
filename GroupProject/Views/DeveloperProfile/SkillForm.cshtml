@@ -1,0 +1,35 @@
+﻿@model IEnumerable<GroupProject.Models.DeveloperModels.Skill>
+<div id="Skill">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add Skill</h4>
+            </div>
+            <div class="modal-body">
+                <form id="SkillForm">
+                    <div class="form-group">
+                        <label>Skill</label>
+                        <select class="form-control" name="SkillID">
+                            <option value="0">-- Select a Skill --</option>
+                            @foreach (var skill in Model)
+                            {
+                                <option value="@skill.SkillID">@skill.SkillName</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button class="btn btn-primary submit-profile-page-forms" value="5">Save</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+@* model is worng fix ut *@

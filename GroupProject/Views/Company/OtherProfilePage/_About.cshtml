@@ -1,0 +1,13 @@
+﻿@model GroupProject.Models.CompanyModels.Company
+
+<div>
+    <h3><strong>Address</strong></h3>
+    <h4><strong>Street: </strong>@Model.User.Address.StreetName @Model.User.Address.StreetNumber</h4>
+    <h4><strong>City: </strong>@Model.User.Address.City.CityName</h4>
+    <h4><strong>Country: </strong>@Model.User.Address.City.Country.CountryName</h4>
+    <br />
+    <h3><strong>Description</strong></h3>
+    <blockquote>
+        @Model.Description
+    </blockquote>
+</div>

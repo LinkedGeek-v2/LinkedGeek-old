@@ -1,0 +1,49 @@
+﻿@model GroupProject.ViewModels.CompanyViewModels.CompanyDetailsViewModel
+<div id="Details">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close fa fa-times" data-dismiss="modal"></button>
+                <h4 id="detailsFormTitle" class="modal-title">Personal Details</h4>
+            </div>
+            <div class="modal-body">
+                <form id="DetailsForm">
+                    <div class="form-group">
+                        @Html.LabelFor(det => det.CompanyName)
+                        @Html.TextBoxFor(det => det.CompanyName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(det => det.CompanyName, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(det => det.FounderName)
+                        @Html.TextBoxFor(det => det.FounderName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(det => det.FounderName, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.FoundationDate)
+                        <input class="form-control valid" data-val="true" id="FoundationDate" name="FoundationDate" type="date" value="@(Model.FoundationDate.HasValue ? Model.FoundationDate.Value.ToString("yyyy-MM-dd") :"" )">
+                        @Html.ValidationMessageFor(m => m.FoundationDate, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(ex => ex.Description)
+                        @Html.TextAreaFor(ex => ex.Description, new {@class = "form-control", style = "width:400px; height:200px;" })
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button class="btn btn-primary submit-profile-page-forms" value="2">Save</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@Scripts.Render("~/bundles/jqueryval")

@@ -1,0 +1,92 @@
+﻿@model GroupProject.ViewModels.CompanyViewModels.CompanyFormViewModel
+
+<h2>OtherCompProfilePage</h2>
+
+@*<div class="panel-group">*@
+    @*<div class="panel panel-default row">
+        <div class="panel-body">
+            <div id="profilePic" class="col-md-3">
+                <img id="profilePic2" src="@Html.Action("UserPhotos", "User")" style="width:160px;height:160px; background: #FFFFFF;
+                margin: auto;
+                -moz-border-radius: 60px;
+                border-radius: 100px;
+                padding: 6px;
+                box-shadow: 0px 0px 20px #888;" />
+            </div>
+        </div>
+    </div>*@
+
+    <div class="panel panel-default row">
+        <div class="panel-body col-sm-3">
+            <img id="profilePic2" src="@Html.Action("UserPhotos", "User")" style="width:160px;height:160px; background: #FFFFFF;
+                margin: auto;
+                -moz-border-radius: 60px;
+                border-radius: 100px;
+                padding: 6px;
+                box-shadow: 0px 0px 20px #888;" />
+            <h3><u>@Model.CompanyName</u></h3>
+            <ul class="nav nav-pills nav-stacked">
+                @foreach (var action in Model.Actions)
+                {
+                    <li id="@action">
+                        @Ajax.ActionLink(action, action, "OtherCompanyProfilePage", new { companyId = Model.CompanyID }, new AjaxOptions
+                   {
+                       UpdateTargetId = "replace",
+                       InsertionMode = InsertionMode.Replace,
+                       HttpMethod = "GET"
+                   })
+                    </li>
+                }
+            </ul>
+        </div>
+
+        <div class="panel-body col-sm-9">
+            <div id="replace"></div>
+        </div>
+    </div>
+@*</div>*@
+
+
+@* FOUND IN DERMENTZIS PROJECT     CHECK IT *@
+
+
+@*@model GroupProject.ViewModels.CompanyViewModels.CompanyFormViewModel
+
+<h2>OtherCompProfilePage</h2>
+
+<div class="panel-group">
+    <div class="panel panel-default row">
+        <div class="panel-body">
+            <div id="profilePic" class="col-md-3">
+                <img id="profilePic2" style="width:160px;height:160px; background: #FFFFFF;
+                margin: auto;
+                -moz-border-radius: 60px;
+                border-radius: 100px;
+                padding: 6px;
+                box-shadow: 0px 0px 20px #888;" />
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default row">
+        <div class="panel-body col-sm-3">
+            <ul class="nav nav-pills nav-stacked">
+                @foreach (var action in Model.Actions)
+                {
+                    <li id="@action">
+                        @Ajax.ActionLink(action, action, "OtherCompanyProfilePage", new AjaxOptions
+                        {
+                            UpdateTargetId = "replace",
+                            InsertionMode = InsertionMode.Replace,
+                            HttpMethod = "GET"
+                        })
+                    </li>
+                }
+            </ul>
+        </div>
+
+        <div class="panel-body col-sm-9">
+            <div id="replace"></div>
+        </div>
+    </div>
+</div>*@

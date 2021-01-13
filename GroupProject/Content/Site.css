@@ -1,0 +1,1225 @@
+﻿﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists
+   will truncate terms that are too long to fit in the left column
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+
+/*Circular Profile pic*/
+.circular-portrait {
+}
+
+    .circular-portrait img {
+        width: 160px;
+        height: 160px;
+        background: #FFFFFF;
+        margin: auto;
+        -moz-border-radius: 60px;
+        border-radius: 100px;
+        padding: 6px;
+        box-shadow: 0px 0px 20px #888;
+    }
+/*NetworkPage dont change cursor look on hover*/
+.list-link {
+}
+
+.list-group .list-link:hover {
+    cursor: pointer;
+}
+
+.btn-profile {
+    border: solid;
+    width: 100%;
+}
+
+
+/******************************************************** CHAT WINDOW CSS START ******************************************************/
+
+
+.chat-window-popup {
+    background-color: #ececec;
+    position: fixed;
+    bottom: 0px;
+    right: 30px;
+    width: 250px;
+    height: 40px;
+    border-top-left-radius: 15px;
+    -webkit-box-shadow: 3px 8px 7px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 3px 8px 7px 0px rgba(0,0,0,0.75);
+    box-shadow: 3px 8px 7px 0px rgba(0,0,0,0.75);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+
+    .chat-window-popup .chat-window-popup-title {
+        width: 80%;
+        line-height: 35px;
+        margin: 5px;
+        text-align: center;
+    }
+
+
+        .chat-window-popup .chat-window-popup-title i {
+            font-style: normal;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+    .chat-window-popup .chat-window-popup-title-btns {
+        width: 20%;
+        text-align: center;
+    }
+
+        .chat-window-popup .chat-window-popup-title-btns .fa-angle-up {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+
+
+.chat-followers-col {
+    background-color: #ececec;
+    position: fixed;
+    width: 250px;
+    bottom: -400px;
+    right: 30px;
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+    -webkit-box-shadow: 3px 4px 7px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 3px 4px 7px 0px rgba(0,0,0,0.75);
+    box-shadow: 3px 4px 7px 0px rgba(0,0,0,0.75);
+}
+
+    .chat-followers-col .chat-followers-search {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: solid 1px #ebeced;
+        height: 10%;
+        padding: 5px;
+    }
+
+        .chat-followers-col .chat-followers-search .fa-search {
+            font-size: 16px;
+            padding: 10px;
+            width: 10%;
+        }
+
+        .chat-followers-col .chat-followers-search input {
+            width: 78%;
+            height: 80%;
+            margin-right: 8px;
+        }
+
+            .chat-followers-col .chat-followers-search input:focus {
+                outline: none;
+            }
+
+
+    .chat-followers-col .chat-followers-list {
+        height: 90%;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        overflow: scroll;
+        overflow-x: hidden;
+    }
+
+
+        .chat-followers-col .chat-followers-list .chat-each-follower {
+            line-height: 45px;
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            border-bottom: solid 1px #ebeced;
+            cursor: pointer;
+        }
+
+            .chat-followers-col .chat-followers-list .chat-each-follower .chat-follower-photo {
+                width: 20%;
+                display: flex;
+                align-items: center;
+            }
+
+                .chat-followers-col .chat-followers-list .chat-each-follower .chat-follower-photo img {
+                    width: 45px;
+                    height: 45px;
+                    border-radius: 40px;
+                    background-size: cover !important;
+                    margin-top: 5px;
+                    margin-left: 5px;
+                }
+
+
+            .chat-followers-col .chat-followers-list .chat-each-follower .chat-follower-details {
+                display: flex;
+                align-items: center;
+                width: 80%;
+                display: block;
+                margin-left: 14px;
+            }
+
+                .chat-followers-col .chat-followers-list .chat-each-follower .chat-follower-details span {
+                    font-size: 14px;
+                    font-weight: bold;
+                    display: block;
+                    margin-bottom: -28px;
+                    overflow: hidden;
+                }
+
+                .chat-followers-col .chat-followers-list .chat-each-follower .chat-follower-details small {
+                    background-color: red;
+                    overflow: hidden;
+                    font-size: 11px;
+                }
+
+
+.chat-messaging-col {
+    background-color:#cccccc ;
+    width: 300px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    right: 280px;
+    bottom: -400px;
+    border-top-left-radius: 15px;
+    -webkit-box-shadow: 0px 0px 0px 3px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 0px 3px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+}
+
+    .chat-messaging-col .chat-current-chatting-user {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        height: 10%;
+        border-bottom: solid 1px #ebeced;
+        border-top: solid 1px #ebeced;
+        display: flex;
+        align-items: center;
+        border-top-left-radius: 15px;
+    }
+
+        .chat-messaging-col .chat-current-chatting-user .chat-user-info {
+            width: 22%;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            height: 100%;
+            border-top-left-radius: 15px;
+        }
+
+            .chat-messaging-col .chat-current-chatting-user .chat-user-info .chat-follower-photo {
+                background-size: cover !important;
+                position: relative;
+                width: 38px;
+                height: 38px;
+                border-radius: 50px;
+            }
+
+        .chat-messaging-col .chat-current-chatting-user .chat-follower-photo span {
+            border-radius: 50px;
+        }
+
+        .chat-messaging-col .chat-current-chatting-user .chat-follower-photo .fa-circle {
+            color: rgb(37,163,0);
+            position: absolute;
+            bottom: 1px;
+            right: 5px;
+            font-size: 12px;
+            /*    -webkit-box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.75);
+            -moz-box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.75);
+            box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.75);*/
+        }
+
+
+        .chat-messaging-col .chat-current-chatting-user .chat-follower-details {
+            width: 75%;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            padding-left: 8px;
+        }
+
+            .chat-messaging-col .chat-current-chatting-user .chat-follower-details .chat-user-name {
+                font-weight: bold;
+                font-size: 18px;
+            }
+
+            .chat-messaging-col .chat-current-chatting-user .chat-follower-details .chat-user-last-seen {
+                font-size: 11px;
+            }
+
+
+.all-chat-history {
+    display: flex;
+    align-items: center;
+}
+
+
+.chat-messaging-col .chat-message-window {
+    overflow: scroll;
+    height: 78%;
+    overflow-x: hidden;
+    border-bottom: solid 1px #ebeced;
+    display: flex;
+    flex-direction: column;
+}
+
+
+    .chat-messaging-col .chat-message-window .showing-messages {
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+    }
+
+    .chat-messaging-col .chat-message-window .sent-messages {
+        display: flex;
+        justify-content: flex-end;
+        color:red;
+    }
+
+    .chat-messaging-col .chat-message-window .showing-messages small {
+        font-size: 11px;
+        text-align: center;
+        margin-bottom: -2px;
+    }
+
+    .chat-messaging-col .chat-message-window .received-messages {
+        display: flex;
+    
+    }
+
+    .chat-messaging-col .chat-message-window .message-content {
+        margin: 2px;
+        max-width: 78%;
+        border-radius: 5px;
+    }
+
+    .chat-messaging-col .chat-message-window .sent-messages .message-content {
+        border-top-left-radius: 25px;
+        border-bottom-left-radius: 25px;
+        margin-right: 10px;
+        background-color: green;
+    }
+
+    .chat-messaging-col .chat-message-window .received-messages .message-content {
+        border-top-right-radius: 25px;
+        border-bottom-right-radius: 25px;
+        margin-left: 10px;
+        background-color: dodgerblue;
+    }
+
+    .chat-messaging-col .chat-message-window .message-content .message-text {
+        word-break: break-word;
+        margin: 5px;
+        margin-left: 5px;
+        margin-right: 10px;
+        font-weight: 500;
+        color: white;
+    }
+
+    .chat-messaging-col .chat-message-window .sent-messages .message-content .message-text {
+        margin-left: 15px;
+    }
+
+.chat-messaging-col .chat-message-input {
+    height: 12%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+/******************************************************** CHAT WINDOW CSS END ******************************************************/
+
+
+
+
+/****************************************** HOMEPAGE CSS START *****************************************/
+
+.img-circle {
+    width: 50px;
+    height: 60px;
+    border-radius: 200%;
+    overflow: hidden;
+    perspective: 10px;
+}
+.homepage-container {
+    display: flex;
+}
+
+    .homepage-container .homepage-minisection {
+        position: relative;
+        width: 30%;
+        max-width: 30%;
+        height: 100%;
+    }
+
+        .homepage-container .homepage-minisection #extradiv {
+            position: absolute;
+            width: 100%;
+        }
+
+            .homepage-container .homepage-minisection #extradiv #mini-network {
+                padding: 5px;
+                border-radius: 14px;
+                background: linear-gradient(145deg, #fbfbfb, #d4d4d4);
+                box-shadow: 14px 14px 28px #a9a9a9, -14px -14px 28px #ffffff;
+                position: fixed;
+            }
+
+                .homepage-container .homepage-minisection #extradiv #mini-network .mini-network-company {
+                    display: flex;
+                }
+
+                    .homepage-container .homepage-minisection #extradiv #mini-network .mini-network-company img {
+                        width: 70px;
+                    }
+
+.homepage {
+    margin: 0 auto;
+    display: block;
+    width: 50%;
+}
+
+#feed {
+    max-height: 500px;
+    overflow-y: auto;
+    overflow-x: visible;
+    width: 100%;
+}
+
+    #feed::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        background-color: #F5F5F5;
+    }
+
+    #feed::-webkit-scrollbar {
+        width: 10px;
+        background-color: #F5F5F5;
+    }
+
+    #feed::-webkit-scrollbar-thumb {
+        background-color: #000000;
+        border: 2px solid #555555;
+    }
+
+    #feed a {
+        color: black;
+    }
+
+    #feed .post {
+        border-left: solid 1px #d9d6d6;
+        border-top: solid 1px #d9d6d6;
+        width: 97%;
+        min-height: 0px;
+        margin-bottom: 10px;
+        margin-top: 10px;
+        border-radius: 3px;
+        -webkit-box-shadow: 10px 7px 13px -1px rgba(0,0,0,0.54);
+        -moz-box-shadow: 10px 7px 13px -1px rgba(0,0,0,0.54);
+        box-shadow: 10px 7px 13px -1px rgba(0,0,0,0.54);
+    }
+
+        #feed .post .post-header {
+            display: flex;
+            background-color: #ebebeb;
+        }
+            #feed .post .post-header .post-details .user-name{
+                margin-left:20px;
+            }
+            #feed .post .post-header .post-details .user-name:hover {
+                cursor: pointer;
+            }
+
+            #feed .post .post-header .post-profilepic {
+                width: 15%;
+                padding: 10px;
+            }
+
+                #feed .post .post-header .post-profilepic:hover {
+                    cursor: pointer;
+                }
+
+                #feed .post .post-header .post-profilepic img {
+                    width: 120%;
+                }
+
+            #feed .post .post-header .post-details {
+                width: 80%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+        #feed .post .post-body {
+            width: 100%;
+        }
+            #feed .post .post-body .uploaded-image{
+                display:flex;
+                width:100%;
+                justify-content:center;
+            }
+                #feed .post .post-body .uploaded-image img {
+                    max-width:100%;
+                }
+
+            #feed .post .post-body .uploaded-text {
+            }
+
+                #feed .post .post-body .uploaded-text p {
+                    padding: 15px;
+                    font-family: Georgia;
+                }
+
+#create-post {
+    border: solid 1px #f5f5f5;
+    background-color: #efeace;
+    -webkit-box-shadow: 4px 3px 5px 0px rgba(0,0,0,0.23);
+    -moz-box-shadow: 4px 3px 5px 0px rgba(0,0,0,0.23);
+    box-shadow: 4px 3px 5px 0px rgba(0,0,0,0.23);
+    position: relative;
+}
+
+    #create-post .first-row {
+        padding: 15px;
+    }
+
+        #create-post .first-row #input-text {
+            width: 100%;
+            height: 60px;
+            max-width: none;
+            resize: none;
+            overflow-y: hidden;
+        }
+
+        #create-post .first-row #uploadedImage {
+            max-height: 400px;
+            max-width: 200px;
+        }
+
+    #create-post .between-row {
+        position: absolute;
+        top: 45%;
+        left: 10%;
+    }
+
+        #create-post .between-row #errorMsg {
+            color: red;
+            font-size: 12px;
+            visibility: hidden;
+        }
+
+    #create-post .second-row {
+        padding: 15px;
+    }
+
+        #create-post .second-row #postform {
+            display: flex;
+            justify-content: space-between;
+        }
+
+            #create-post .second-row #postform .first-col {
+                display: flex;
+            }
+
+                #create-post .second-row #postform .first-col .fileUpload {
+                    display: inline-block;
+                    margin: 2px;
+                    padding: 0;
+                    border: 0;
+                    text-indent: -1000em;
+                    cursor: pointer;
+                    align-items: center;
+                }
+
+                #create-post .second-row #postform .first-col #uploadImg-input {
+                    background: transparent url(/Images/upload_img.png) no-repeat center top;
+                    background-size: 40px 40px;
+                    width: 40px;
+                    height: 40px;
+                }
+
+                    #create-post .second-row #postform .first-col #uploadImg-input:hover {
+                        transform: scale(1.3);
+                        cursor: pointer;
+                        transition: .5s;
+                    }
+
+                #create-post .second-row #postform .first-col #uploadVid-input {
+                    background: transparent url(/Images/upload_video.png) no-repeat center top;
+                    background-size: 43px 43px;
+                    width: 43px;
+                    height: 43px;
+                }
+/************************************ HOMEPAGE CSS END **********************************************/
+
+
+
+/********************************************** PROFILE PAGE CSS START ********************************************************************/
+
+
+.profile-page-container .panel-group .row .background-profile-page-image label {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    font-size: 25px;
+    color: white;
+}
+
+    .profile-page-container .panel-group .row .background-profile-page-image label:hover {
+        transform: scale(1.5);
+        cursor: pointer;
+    }
+
+.profile-page-container .panel-group .row .background-profile-page-image {
+    position: relative;
+}
+
+
+    .profile-page-container .panel-group .row .background-profile-page-image img {
+        width: 100%;
+        height: 250px;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+    }
+
+
+
+.profile-page-container .panel-group .row {
+    border-radius: 20px;
+    background-color: #ebeced;
+    margin: 20px;
+    width: 80%;
+    -webkit-box-shadow: -1px -1px 6px -1px rgba(0,0,0,0.75);
+    -moz-box-shadow: -1px -1px 6px -1px rgba(0,0,0,0.75);
+    box-shadow: -1px -1px 6px -1px rgba(0,0,0,0.75);
+}
+
+
+    .profile-page-container .panel-group .row .profile-images {
+        position: relative;
+    }
+
+    .profile-page-container .panel-group .row #profilePic2 {
+        position: absolute;
+        bottom: -30px;
+        left: 20px;
+        width: 160px;
+        height: 160px;
+        background: #FFFFFF;
+        margin: auto;
+        -moz-border-radius: 60px;
+        border-radius: 100px;
+        padding: 6px;
+        margin: 10px;
+        -webkit-box-shadow: 3px 6px 36px 0px rgba(0,0,0,0.75);
+        -moz-box-shadow: 3px 6px 36px 0px rgba(0,0,0,0.75);
+        box-shadow: 3px 6px 36px 0px rgba(0,0,0,0.75);
+    }
+
+
+    .profile-page-container .panel-group .row #fileUpload {
+        display: none;
+    }
+
+
+    .profile-page-container .panel-group .row #profilePic label:hover {
+        transform: scale(1.1);
+        cursor: pointer;
+        transition: .5s;
+    }
+
+    .profile-page-container .panel-group .row .profile-images #bg-fileUpload {
+        display: none;
+    }
+
+
+
+    .profile-page-container .panel-group .row .profileDetails {
+        margin-top: 40px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+        .profile-page-container .panel-group .row .profileDetails .devDetails {
+            font-size: 18px;
+            margin: 20px;
+            margin-left: 50px;
+            display: flex;
+            flex-direction: column;
+        }
+
+            .profile-page-container .panel-group .row .profileDetails .devDetails #fullName {
+                font-size: 22px;
+            }
+
+        .profile-page-container .panel-group .row .profileDetails .edit-details-buttons a {
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .profile-page-container .panel-group .row .profileDetails .edit-details-buttons {
+            display: flex;
+            flex-direction: column;
+            margin: 20px;
+            justify-content: space-between;
+        }
+
+    .profile-page-container .panel-group .row .profile-page-update {
+        margin: 20px;
+        height: 100%;
+    }
+
+        .profile-page-container .panel-group .row .profile-page-update button {
+            border-radius: 15px;
+        }
+
+        .profile-page-container .panel-group .row .profile-page-update .dropdown-menu a {
+            display: flex;
+            margin: 3px;
+            justify-content: center;
+        }
+
+#dev-profile-page-form-replace .modal-dialog .modal-content {
+    background: url(../Images/form-background.jpg) no-repeat;
+    width: 100%;
+    height: 100%;
+
+}
+
+#dev-profile-page-form-replace .modal-dialog .close {
+    font-size: 30px;
+    color: black;
+}
+
+#dev-profile-page-form-replace .modal-body {
+    display: flex;
+    justify-content: center;
+}
+
+    #dev-profile-page-form-replace .modal-body form {
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+    }
+
+.profile-page-container .panel-group .devEdu {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 80%;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.profile-page-container .devEdu .devEducation {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.profile-page-container .panel-group .devEdu .eduHeader2 {
+    display: flex;
+    justify-content: space-between;
+}
+
+.profile-page-container .panel-group .row .addBtnPanel {
+    margin-top: 16px;
+    height: 90%;
+}
+
+
+.profile-page-container .panel-group .row label {
+    font-size: 18px;
+    margin: 2px;
+}
+
+
+.profile-page-container .panel-group .rowHr {
+    border: 1px solid #ccc;
+}
+
+.profile-page-container .panel-group .headerHr {
+    border: 1px solid black;
+    width: 100%;
+    margin-top: -5px;
+}
+
+.profile-page-container .panel-group .devExp {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 80%;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+    .profile-page-container .panel-group .devExp .devExperience {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        flex-direction: column;
+    }
+
+
+    .profile-page-container .panel-group .devExp .expHeader2 {
+        display: flex;
+        justify-content: space-between;
+    }
+
+
+.profile-page-container .panel-group .devSkills {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 80%;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.profile-page-container .devSkills .devSkill {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.profile-page-container .panel-group .devSkills .skillHeader2 {
+    display: flex;
+    justify-content: space-between;
+}
+
+.profile-page-container .panel-group .dev-parent {
+    display: flex;
+    justify-content: space-between;
+}
+
+    .profile-page-container .panel-group .dev-parent .dev-buttons {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        font-size: 25px;
+        width: auto;
+        height: auto;
+        margin-right: 35px;
+    }
+
+.profile-page-container .panel-group .dev-buttons a:hover {
+    transform: scale(1.3);
+}
+
+.profile-page-container .panel-group .dev-buttons button:hover {
+    transform: scale(1.3);
+}
+
+.profile-page-container .panel-group .dev-buttons a {
+    margin-left: 5px;
+    text-decoration: none;
+    color: black;
+}
+
+.profile-page-container .panel-group .devSkill .dev-child span {
+    font-size: 22px;
+}
+
+
+.profile-page-container .text-danger {
+    font-weight: bold;
+}
+
+/********************************************** PROFILE PAGE CSS START ********************************************************************/
+
+
+.profile-page-container .panel-group .row .background-profile-page-image label {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    font-size: 25px;
+    color: white;
+}
+
+    .profile-page-container .panel-group .row .background-profile-page-image label:hover {
+        transform: scale(1.5);
+        cursor: pointer;
+    }
+
+.profile-page-container .panel-group .row .background-profile-page-image {
+    position: relative;
+}
+
+
+    .profile-page-container .panel-group .row .background-profile-page-image img {
+        width: 100%;
+        height: 250px;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+    }
+
+
+
+.profile-page-container .panel-group .row {
+    border-radius: 20px;
+    background-color: #ebeced;
+    margin: 20px;
+    width: 80%;
+    -webkit-box-shadow: -1px -1px 6px -1px rgba(0,0,0,0.75);
+    -moz-box-shadow: -1px -1px 6px -1px rgba(0,0,0,0.75);
+    box-shadow: -1px -1px 6px -1px rgba(0,0,0,0.75);
+}
+
+
+    .profile-page-container .panel-group .row .profile-images {
+        position: relative;
+    }
+
+    .profile-page-container .panel-group .row #profilePic2 {
+        position: absolute;
+        bottom: -30px;
+        left: 20px;
+        width: 160px;
+        height: 160px;
+        background: #FFFFFF;
+        margin: auto;
+        -moz-border-radius: 60px;
+        border-radius: 100px;
+        padding: 6px;
+        margin: 10px;
+        -webkit-box-shadow: 3px 6px 36px 0px rgba(0,0,0,0.75);
+        -moz-box-shadow: 3px 6px 36px 0px rgba(0,0,0,0.75);
+        box-shadow: 3px 6px 36px 0px rgba(0,0,0,0.75);
+    }
+
+
+    .profile-page-container .panel-group .row #fileUpload {
+        display: none;
+    }
+
+
+    .profile-page-container .panel-group .row #profilePic label:hover {
+        transform: scale(1.1);
+        cursor: pointer;
+        transition: .5s;
+    }
+
+    .profile-page-container .panel-group .row .profile-images #bg-fileUpload {
+        display: none;
+    }
+
+
+
+    .profile-page-container .panel-group .row .profileDetails {
+        margin-top: 40px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+        .profile-page-container .panel-group .row .profileDetails .devDetails {
+            font-size: 18px;
+            margin: 20px;
+            margin-left: 50px;
+            display: flex;
+            flex-direction: column;
+        }
+
+            .profile-page-container .panel-group .row .profileDetails .devDetails #fullName {
+                font-size: 22px;
+            }
+
+        .profile-page-container .panel-group .row .profileDetails .edit-details-buttons a {
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .profile-page-container .panel-group .row .profileDetails .edit-details-buttons {
+            display: flex;
+            flex-direction: column;
+            margin: 20px;
+            justify-content: space-between;
+        }
+
+    .profile-page-container .panel-group .row .profile-page-update {
+        margin: 20px;
+        height: 100%;
+    }
+
+        .profile-page-container .panel-group .row .profile-page-update button {
+            border-radius: 15px;
+        }
+
+        .profile-page-container .panel-group .row .profile-page-update .dropdown-menu a {
+            display: flex;
+            margin: 3px;
+            justify-content: center;
+        }
+
+#dev-profile-page-form-replace .modal-dialog .modal-content {
+    background: url(../Images/form-background.jpg) no-repeat;
+    background-size: 100%;
+}
+
+#dev-profile-page-form-replace .modal-dialog .close {
+    font-size: 30px;
+    color: black;
+}
+
+#dev-profile-page-form-replace .modal-body {
+    display: flex;
+    justify-content: center;
+}
+
+    #dev-profile-page-form-replace .modal-body form {
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+    }
+
+.profile-page-container .panel-group .devEdu {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 80%;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.profile-page-container .devEdu .devEducation {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.profile-page-container .panel-group .devEdu .eduHeader2 {
+    display: flex;
+    justify-content: space-between;
+}
+
+.profile-page-container .panel-group .row .addBtnPanel {
+    margin-top: 16px;
+    height: 90%;
+}
+
+
+.profile-page-container .panel-group .row label {
+    font-size: 18px;
+    margin: 2px;
+}
+
+
+.profile-page-container .panel-group .rowHr {
+    border: 1px solid #ccc;
+}
+
+.profile-page-container .panel-group .headerHr {
+    border: 1px solid black;
+    width: 100%;
+    margin-top: -5px;
+}
+
+.profile-page-container .panel-group .devExp {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 80%;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+    .profile-page-container .panel-group .devExp .devExperience {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        flex-direction: column;
+    }
+
+
+    .profile-page-container .panel-group .devExp .expHeader2 {
+        display: flex;
+        justify-content: space-between;
+    }
+
+
+.profile-page-container .panel-group .devSkills {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 80%;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.profile-page-container .devSkills .devSkill {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.profile-page-container .panel-group .devSkills .skillHeader2 {
+    display: flex;
+    justify-content: space-between;
+}
+
+.profile-page-container .panel-group .dev-parent {
+    display: flex;
+    justify-content: space-between;
+}
+
+    .profile-page-container .panel-group .dev-parent .dev-buttons {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        font-size: 25px;
+        width: auto;
+        height: auto;
+        margin-right: 35px;
+    }
+
+.profile-page-container .panel-group .dev-buttons a:hover {
+    transform: scale(1.3);
+}
+
+.profile-page-container .panel-group .dev-buttons button:hover {
+    transform: scale(1.3);
+}
+
+.profile-page-container .panel-group .dev-buttons a {
+    margin-left: 5px;
+    text-decoration: none;
+    color: black;
+}
+
+.profile-page-container .panel-group .devSkill .dev-child span {
+    font-size: 22px;
+}
+
+/************************************************ PROFILE PAGE CSS END ************************************************************************/
+
+
+/*************************************************NOTIFICATION CSS START**********************************************************************/
+
+.noti-content {
+    position: absolute;
+    right: 0px;
+    background: #e5e5e5;
+    border-radius: 4px;
+    top: 49px;
+    width: 270px;
+    height: 200px;
+    display: none;
+    border: 1px solid #9E988B;
+}
+
+ul #noticontent {
+    max-height: 200px;
+    overflow: auto;
+    padding: 0px;
+    margin: 0px;
+}
+
+    ul #noticontent li {
+        padding: 6px;
+        background: #272031;
+        color: #fff;
+        border-bottom: solid 1px;
+    }
+
+.noti-top-arrow {
+    border-color: transparent;
+    border-bottom-color: #F5DEB3;
+    border-style: dashed dashed solid;
+    border-width: 0 8.5px 8.5px;
+    position: absolute;
+    right: 14px;
+    top: -8px;
+}
+
+.noti {
+    color: #9d9d9d;
+    margin: 15px;
+    position: absolute;
+    right: 0px;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+    .noti:hover {
+        color: yellow;
+    }
+
+.count {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    padding: 0px;
+    width: 0px 0px 0px 0px;
+    height: 14px;
+    border-radius: 100%;
+    background: #222222;
+    color: white;
+}
+/************************************************* PEOPLE ON COMPANY PROFILE CSS START **********************************************************************/
+
+
+.people-working {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+
+    .people-working img {
+        width: 110px;
+        height: 110px;
+        margin: 5px;
+    }
+
+    .people-working .each-worker {
+        display: flex;
+        width: 20%;
+        height: 20%;
+        margin: 10px;
+        -webkit-box-shadow: 1px 1px 6px 0px rgba(0,0,0,0.75);
+        -moz-box-shadow: 1px 1px 6px 0px rgba(0,0,0,0.75);
+        box-shadow: 1px 1px 6px 0px rgba(0,0,0,0.75);
+        border-radius: 8px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+
+    .people-working .worker-name {
+        font-weight: bold;
+        margin: 5px;
+    }
+
+
+/************************************************* PEOPLE ON COMPANY PROFILE CSS END **********************************************************************/

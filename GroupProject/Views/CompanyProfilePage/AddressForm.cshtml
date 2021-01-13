@@ -1,0 +1,58 @@
+﻿@model GroupProject.ViewModels.DeveloperViewModels.ProfilePageViewModels.AddressProfilePageViewModel
+<div id="Address">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close fa fa-times" data-dismiss="modal"></button>
+                <h4 id="addressFormTitle" class="modal-title"><strong>Address Details</strong></h4>
+            </div>
+            <div class="modal-body">
+                <form id="AddressForm">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.StreetName)
+                        @Html.TextBoxFor(m => m.StreetName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.StreetName, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.StreetNumber)
+                        @Html.TextBoxFor(m => m.StreetNumber, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.StreetNumber, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">Country</label>
+                        <input list="countries" name="country" class="form-control" id="country" placeholder="Enter Country Name">
+                        <datalist id="countries"></datalist>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">City</label>
+                        <input list="cities" name="city" class="form-control" id="city" disabled placeholder="Enter City Name">
+                        <datalist id="cities"></datalist>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="hidden" name="CityID" value="" />
+                    </div>
+
+                    <div class="form-group">
+                        <input type="hidden" name="countryIsoID" value="" />
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button class="btn btn-primary submit-profile-page-forms" value="1">Save</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/bundles/cityCountry")

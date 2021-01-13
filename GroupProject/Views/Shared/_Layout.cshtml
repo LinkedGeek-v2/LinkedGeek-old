@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+
+
+    @Html.Partial("_NavBar")
+    <br/>
+    <br/>
+    <br/>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+
+    @if (User.Identity.IsAuthenticated)
+    {
+
+        <section class="chat-window-popup">
+            <div class="chat-window-popup-title">
+                <i>Click for Chatting</i>
+            </div>
+
+            <div class="chat-window-popup-title-btns">
+                <span class="fa fa-angle-up"></span>
+            </div>
+        </section>
+
+        <div class="chat-messaging-col">
+
+            <div class="chat-current-chatting-user">
+                <div class="chat-user-info">
+                    <div class="chat-follower-photo" style="background: url('../../Images/UserProfilePics/NoImageMale.png');">
+                        <span class="chat-is-user-active fa fa-circle"></span>
+                    </div>
+                </div>
+
+                <div class="chat-follower-details">
+                    <span class="chat-user-name"></span>
+
+                </div>
+
+            </div>
+
+            <div id="show-messages" class="chat-message-window">
+
+              
+            </div>
+
+            <div class="chat-message-input">
+                <form id="msg-form">
+
+                    <input type="text" name="msg" />
+
+                    <button type="submit">Clickme</button>
+
+                </form>
+            </div>
+        </div>
+
+        <div class="chat-followers-col">
+
+            <div class="chat-followers-search">
+                <span class="fa fa-search"></span>
+                <input type="text" name="searchFollowers" placeholder="Search Messages" />
+            </div>
+
+            <div class="chat-followers-list">
+
+            </div>
+
+        </div>
+
+    }
+
+    @Scripts.Render("~/bundles/lib")
+
+
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+        <script src="~/signalr/hubs"></script>
+        <script src="~/Scripts/Chat/HubBooter.js"></script>
+
+        <script src="~/Scripts/Chat/popupClick.js"></script>
+
+
+
+        <script src="~/Scripts/GD/notificationService.js"></script>
+        <script src="~/Scripts/Chat/chatService.js"></script>
+
+
+
+        @*<script src="~/Scripts/HomePageAC/VariousClasses/FeedHubSubscriber.js"></script>*@
+
+
+    }
+    @RenderSection("scripts", required: false)
+
+</body>
+
+</html>

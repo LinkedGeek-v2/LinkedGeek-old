@@ -1,0 +1,113 @@
+﻿@model GroupProject.ViewModels.CompanyViewModels.CompanyFormViewModel
+
+<h2>Profile Page</h2>
+
+<div class="panel-group">
+    <div class="panel panel-default row">
+        <div class="panel-body col-sm-3">
+            <div id="profilePic" class="col-md-3">
+                <img id="profilePic2" src="@Html.Action("UserPhotos", "User")" style="width:160px;height:160px; background: #FFFFFF;
+                margin: auto;
+                -moz-border-radius: 60px;
+                border-radius: 100px;
+                padding: 6px;
+                box-shadow: 0px 0px 20px #888;" />
+            </div>
+            <input type="file" name="UserPhoto" id="fileUpload" accept=".png,.jpg,.jpeg,.gif,.tif" />
+            <div class="profile-page-update dropdown">
+                <button class="btn btn-primary btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Update your Profile
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    @Ajax.ActionLink("Address Details", "AddressForm", "CompanyProfilePage", new AjaxOptions
+               {
+                   UpdateTargetId = "comp-profile-page-form-replace",
+                   InsertionMode = InsertionMode.Replace,
+                   HttpMethod = "Get"
+               }, new { @class = "btn btn-primary", data_toggle = "modal", data_target = "#comp-profile-page-form-replace" })
+
+                    @Ajax.ActionLink("Edit your Details", "DetailsForm", "CompanyProfilePage", new AjaxOptions
+             {
+                 UpdateTargetId = "comp-profile-page-form-replace",
+                 InsertionMode = InsertionMode.Replace,
+                 HttpMethod = "Get"
+             }, new { @class = "btn btn-primary", data_toggle = "modal", data_target = "#comp-profile-page-form-replace" })
+
+                </div>
+            </div>
+            <ul class="nav nav-pills nav-stacked">
+                @foreach (var action in Model.Actions)
+                {
+                    if (action != "Home")
+                    {
+                    <li id="@action">
+                        @Ajax.ActionLink(action, action, "CompanyProfilePage", new AjaxOptions
+                        {
+                            UpdateTargetId = "replace",
+                            InsertionMode = InsertionMode.Replace,
+                            HttpMethod = "GET"
+                        })
+                    </li>
+                    }                    
+                }
+            </ul>
+        </div>
+
+        <div id="comp-profile-page-form-replace" class="modal fade" role="dialog"></div>
+
+        <div id="replace" class="panel-body col-sm-9">
+
+        </div>
+    </div>
+</div>
+
+
+@Scripts.Render("~/bundles/GD", "~/bundles/HomePageAC")
+@Scripts.Render("~/bundles/AddressComp")
+@section Scripts
+{
+    <script>
+        let countriesID = [];
+        let citiesArr = [];
+        $(document).ready(function () {
+
+            //Profile Picture
+            new ProfileImageSelectionController("#fileUpload", "#profilePic2");
+
+
+            $(document).on("click", ".submit-profile-page-forms", function (e) {
+                e.preventDefault();
+                switch (this.value) {
+                    case "1":
+                        if ($('#AddressForm').valid()) {
+                            let addressForm = $("#AddressForm");
+                            let addressInputs = addressForm.serializeArray().reduce((obj, item) => Object.assign(obj, { [item.name]: item.value }), {});
+                            AddressController.createOrEditAddress(addressInputs);
+                        }
+                        break;
+                    case "2":
+                        if ($('#DetailsForm').valid()) {
+                            let inputs = $('#DetailsForm').serializeArray().reduce((obj, item) => Object.assign(obj, { [item.name]: item.value }), {});
+                            DetailsController.saveDetails(inputs,"comp");
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            });
+
+            //Using CompanyController from an external script rendered above
+            //Delete Job
+            CompanyController.deleteJob();
+
+            //Post Job to Db
+            CompanyController.postJob("@Model.CompanyID");
+
+            //Accept Applicant
+            CompanyController.manageApplicant(".acceptApplicant", "Congratulations you've been accepted!");
+
+            //Reject Applicant
+            CompanyController.manageApplicant(".rejectApplicant", "Sorry you've been rejected!");
+        });
+    </script>
+}

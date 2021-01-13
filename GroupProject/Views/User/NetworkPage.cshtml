@@ -1,0 +1,208 @@
+﻿
+@{
+    ViewBag.Title = "NetworkPage";
+}
+@using Microsoft.AspNet.Identity;
+
+<h2>Network</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3">
+            <span class="row"></span>
+            <span class="row"></span>
+            <span class="row"></span>
+            <span class="row"></span>
+            <span class="row"></span>
+            <span class="row"></span>
+            <span class="row"></span>
+            <span class="row"></span>
+            <span class="row"></span>
+
+            <div class="list-group">
+                <a class="list-group-item active list-link" id="FollowersLink">
+                    <p>Followers</p>
+                    @*@Html.ActionLink("Followers", "NetworkPage", "User", null, new { @class = "active", @id="FollowersLink" })*@
+                </a>
+                <a class="list-group-item list-link" id="FolloweesLink">
+                    <p>Followees</p>
+                </a>
+                <a class="list-group-item list-link" id="RecommendedLink">
+                    <p>Recommended</p>
+                </a>
+
+            </div>
+        </div>
+        <div class="col-sm-9">
+            <div class="row">
+                <h3 class="col-md-5"><b id="friend-count"> </b> Connections</h3>
+            </div>
+            <span class="row"></span>
+            <table id="friends-table" class="table table-bordered">
+                <tbody></tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+
+
+            let devId = "@User.Identity.GetUserId()";
+            let table = $("#friends-table").DataTable({
+                scrollY: screen.height*4/7,
+                scrollCollapse: true,
+                ajax: {
+                    url: "/api/users/followers/"+devId,
+                    dataSrc: ""
+                },
+                columns: [
+                    {//<img src="/User/UserPhotos/` + userId + `" />
+                        data: "somenamy",
+                        render: function (data, type, user) {
+                            
+                            let userId = user.developer != null ? user.developer.developerID : user.company.companyID;
+                            let profpageUrl = user.developer != null ? `/OtherDeveloperProfile/OtherDeveloperProfilePage/${userId}` : `/OtherCompanyProfilePage/OtherCompProfilePage/${userId}`
+                            let tableBody = `<div class="col-md-3">
+                                        <a href="${profpageUrl}">
+                                                <div class="circular-portrait">
+                                                    <img src="`+ user.imageBase64 +`" alt="cant show"  />
+                                                </div>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-3">`
+                            if (user.developer!=null) {
+                                tableBody += `<a href="${profpageUrl}">
+                                                <h4>` + user.developer.fullName + `</h4 >
+                                             </a>
+                                            <p><i>works at </i><b>`+ user.developer.companyWorking.companyName + `</b></p>`;
+                            }
+
+
+                            else {
+                                tableBody += `<a href="${profpageUrl}">
+                                            <h4>` + user.company.companyName + `</h4 >
+                                            </a>`;
+                            }
+                            tableBody += `</div>
+                             <div class="col-md-4">
+                             </div>
+                             <div class="col-md-1">
+                                 <span class="row"></span>
+                                 <span class="row"></span>`;
+                            if ($("#RecommendedLink").hasClass("active"))
+                                tableBody += `<button user-id="${userId}" class="btn btn-sm follow"><img src="/Images/follow.png" width="35px" height="35px"/></button>`;
+                            else if($("#FolloweesLink").hasClass("active"))
+                                tableBody += `<button user-id="${userId}" class="btn btn-sm unfollow"><img src="/Images/unfollow.png" width="35px" height="35px"/></button>`;
+                            tableBody += `</div>`;
+
+                            return tableBody;
+                        }
+                    },
+
+                ],
+                autoFill: true,
+                initComplete: function (settings) {
+                    let api = new $.fn.dataTable.Api(settings);
+                    let rowCount = api.rows().count();
+                    $("#friend-count").append(rowCount);
+                }
+            });
+
+
+            $("#FolloweesLink").on("click", function (e) {
+                e.preventDefault();
+
+                // check if link is already active so the datatable ISNT reloaded again
+                if (!$(this).hasClass("active")) {
+
+                    //get the currently active link and remove its "active" class
+                    let curActiveElement = $("#FollowersLink").hasClass("active") ? $("#FollowersLink") : $("#RecommendedLink");
+                    curActiveElement.removeClass("active");
+
+                    //add "active" class to the Followees link
+                    $(this).addClass("active");
+
+                    //reload datable with followees
+                    table.ajax.url("/api/users/followees/"+devId);
+                    table.ajax.reload(reloadFunc);
+                }
+            });
+            $("#FollowersLink").on("click", function (e) {
+                e.preventDefault();
+                //check if link is already active so the datatable ISNT reloaded again
+                if (!$(this).hasClass("active")) {
+
+                    //get the currently active link and remove its "active" class
+                    let curActiveElement = $("#FolloweesLink").hasClass("active") ? $("#FolloweesLink") : $("#RecommendedLink");
+                    curActiveElement.removeClass("active");
+
+                    //add "active" class to the Followees link
+                    $(this).addClass("active");
+
+                    //reload datable with followers
+                    table.ajax.url("/api/users/followers/" + devId);
+                    table.ajax.reload(reloadFunc);
+                }
+            });
+            $("#RecommendedLink").on("click", function (e) {
+                e.preventDefault();
+                if (!$(this).hasClass("active")) {
+                    //get the currently active link and remove its "active" class
+                    let curActiveElement = $("#FolloweesLink").hasClass("active") ? $("#FolloweesLink") : $("#FollowersLink");
+                    curActiveElement.removeClass("active");
+
+                    //add "active" class to the Recommended link
+                    $(this).addClass("active");
+                    //reload datable with followers
+                    table.ajax.url("/api/users/recommended");
+                    table.ajax.reload(reloadFunc);
+
+                }
+
+
+            });
+            $(document).on("click", ".unfollow", function () {
+                let unfollowId = $(this).attr("user-id");
+                let rowId = $(this).attr("row-id");
+                $.ajax({
+                    url: "/api/users/unfollow/" + unfollowId,
+                    method: "delete",
+
+                    success: function () {
+
+                        table.ajax.reload();
+
+                    },
+                    error: function () {
+                        alert("something went wrong");
+                    }
+                });
+            });
+
+            $(document).on("click", ".follow", function () {
+                let followId = $(this).attr("user-id");
+                $.ajax({
+                    url: "/api/users/follow/" + followId,
+                    method: "post",
+
+                    success: function () {
+                        table.ajax.reload();
+                    },
+                    error: function () {
+                        alert("something went wrong with follow");
+                    }
+                });
+            });
+
+            let reloadFunc = function () {
+
+                    $("#friend-count").empty().append(table.rows().count());
+
+            };
+
+        });
+    </script>
+}

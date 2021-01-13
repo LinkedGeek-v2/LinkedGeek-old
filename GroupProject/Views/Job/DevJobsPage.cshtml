@@ -1,0 +1,72 @@
+﻿<h2>Jobs</h2>
+
+<form id="jobForm" class="form-inline">
+    <div class="form-group">
+        <input type="hidden" name="jobID" value="" />
+    </div>
+
+    <div class="form-group">
+        <input type="hidden" name="cityID" value="" />
+    </div>
+
+    <div class="form-group">
+        <input type="hidden" name="countryIsoID" value="" />
+    </div>
+
+    <div class="form-group">
+        <label style="display: block;" for="job">Title</label>
+        <input id="job" name="jobTitle" type="text" class="form-control" placeholder="Search Jobs">
+    </div>
+
+    <div class="form-group">
+        <label style="display: block;" for="country">Country</label>
+        <input id="country" list="countries" name="country" class="form-control" placeholder="Enter Country Name" autocomplete="off">
+        <datalist id="countries"></datalist>
+    </div>
+
+    <div class="form-group">
+        <label style="display: block;" for="city">City</label>
+        <input id="city" list="cities" name="city" class="form-control" placeholder="Enter City Name" disabled autocomplete="off">
+        <datalist id="cities"></datalist>
+    </div>
+
+    <div class="form-group">
+        <label style="display: block;">Ready!</label>
+        <button type="submit" class="btn btn-success">Search</button>
+    </div>
+</form>
+<br />
+<div class="container table-responsive">
+    <table id="job-table" class="table table-bordered table-striped" hidden>
+        <thead class="">
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Date Posted</th>
+                <th>Type</th>
+                <th>Company</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="job-table-data">
+        </tbody>
+    </table>
+</div>
+
+@Scripts.Render("~/bundles/GD")
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            let countries = $("#countries");
+            let cities = $("#cities");
+            let table = $("#job-table");
+
+            //Get All Countries and Cities from Db
+            GetCountriesAndCities(countries, cities);
+
+            //Post data to Db
+            JobsController.jobFormSubmit(table);
+        });
+    </script>
+}

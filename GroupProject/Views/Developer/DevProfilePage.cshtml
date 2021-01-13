@@ -1,0 +1,797 @@
+﻿
+@{
+    ViewBag.Title = "Profile Page";
+}
+
+<h2>Profile Page</h2>
+@*<img src="/Images/UserProfilePics/5a233e06-7ca7-4b65-856c-825588fedebd.jpg" alt="Alternate Text" />*@
+<div class="container">
+
+    <div class="panel-group">
+
+        @*PROFILE PIC*@
+        <div class="panel panel-default row">
+            <div id="profilePic" class="col-md-3">
+                <img id="profilePic2" style="width:160px;height:160px; background: #FFFFFF;
+                margin: auto;
+                -moz-border-radius: 60px;
+                border-radius: 100px;
+                padding: 6px;
+                box-shadow: 0px 0px 20px #888;" />
+            </div>
+
+            <div id="update-profilePic" class="col-md-6 center-block">
+                <form name="form1" method="post" genctype="multipart/form-data">
+                </form>
+                @using (Html.BeginForm("SavePic", "Users", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data", @id = "savePicture" }))
+                {
+                    <div class="form-group">
+                        <div class="col-md-10">
+
+                            <input type="file" name="UserPhoto" id="fileUpload" accept=".png,.jpg,.jpeg,.gif,.tif" />
+
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update Profile Pic</button>
+                }
+            </div>
+
+            <div style="float:right" class="dropdown">
+                <button class="btn btn-primary btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Update your Profile
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    @*@Ajax.ActionLink("Add Address", "AddressForm", "Developer", new AjaxOptions
+               {
+                   UpdateTargetId = "dev-profile-page-form-replace",
+                   InsertionMode = InsertionMode.Replace,
+                   HttpMethod = "Get"
+               }, new { data_toggle ="modal" , data_target= "#dev-profile-page-form-replace" })*@
+                    <button id="have-address" class='btn btn-primary btn-sm dropdown-item btn-profile js-update-profile-add-btn' data-toggle='modal' data-target='#Address'>Add Address</button>
+                    <button class='btn btn-primary btn-sm dropdown-item btn-profile js-update-profile-add-btn' data-toggle='modal' data-target='#Education'>Add Education</button>
+                    <button class='btn btn-primary btn-sm dropdown-item btn-profile js-update-profile-add-btn' data-toggle='modal' data-target='#Experience'>Add Experience</button>
+                    <button class='btn btn-primary btn-sm dropdown-item btn-profile js-update-profile-add-btn skillAdd' data-toggle='modal' data-target='#Skill'>Add Skill</button>
+                </div>
+            </div>
+        </div>
+
+        @*DETAILS*@
+        <div class="panel panel-default row">
+            <div class="panel-body devDetails">
+
+            </div>
+        </div>
+
+        @*<div id="dev-profile-page-form-replace" class="modal fade" role="dialog"></div>*@
+
+    </div>
+
+
+
+
+
+    @*ADDRESS Form*@
+    <div id="Address" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 id="addressFormTitle" class="modal-title">Add Address</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="AddressForm">
+                        <div class="form-group">
+                            <input type="hidden" name="addressID" value="" />
+                        </div>
+                        <div class="form-group">
+                            <label for="">Street Name</label>
+                            <input type="text" name="streetName" value="" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">Street Number</label>
+                            <input type="text" name="streetNumber" value="" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">Country</label>
+                            <input list="countries" name="country" class="form-control" id="country" placeholder="Enter Country Name">
+                            <datalist id="countries"></datalist>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">City</label>
+                            <input list="cities" name="city" class="form-control" id="city" disabled placeholder="Enter City Name">
+                            <datalist id="cities"></datalist>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="hidden" name="cityID" value="" />
+                        </div>
+
+                        <div class="form-group">
+                            <input type="hidden" name="countryIsoID" value="" />
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <button class="btn btn-primary">Save</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @*Education Form*@
+    <div id="Education" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 id="eduFormTitle" class="modal-title">Add Education</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="EducationForm">
+                        <div class="form-group">
+                            <input type="hidden" id="eduID" name="educationID" value="" />
+                        </div>
+                        <div class="form-group">
+                            <label for="">School</label>
+                            <input type="text" name="school" value="" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">Degree</label>
+                            <input type="text" name="degree" value="" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">Field</label>
+                            <input type="text" name="field" value="" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">Grade</label>
+                            <input type="number" name="grade" value="" class="form-control" placeholder="Enter Grade" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">Started</label>
+                            <input type="date" name="startYear" value="" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">Ended</label>
+                            <input type="date" name="endYear" value="" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <button class="btn btn-primary">Save</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*Experience Form*@
+
+    <div id="Experience" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close form-close" data-dismiss="modal">&times;</button>
+                    <h4 id="expFormTitle" class="modal-title">Add Experience</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="ExperienceForm">
+                        <div class="form-group">
+                            <input type="hidden" id="expID" name="experienceID" value="" />
+                        </div>
+                        <div class="form-group">
+                            <label for="">Job</label>
+                            <input type="text" name="jobTitle" value="" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">Company</label>
+                            <input type="text" name="companyName" value="" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">Location</label>
+                            <input type="text" name="companyLocation" value="" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">Started In</label>
+                            <input type="date" name="startYear" value="" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">Ended In</label>
+                            <input type="date" name="endYear" value="" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">Job Type</label>
+                            <select id="JobType" class="form-control">
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <button class="btn btn-primary">Save</button>
+                                <button type="button" class="btn btn-default form-close" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @*SKILL FORM*@
+
+    <div id="Skill" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add Skill</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="SkillForm">
+                        <div class="form-group">
+                            <input type="hidden" name="skillID" value="" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">Skills</label>
+                            <select id="skillList" class="form-control"></select>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <button class="btn btn-primary">Save</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+@Scripts.Render("~/bundles/ProfilePageGN")
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            let citiesArr = [];
+
+            console.log("Html action returns:");
+            let imgname = `@Html.Action("UserPhotos", "User")`;
+            $("#profilePic2").attr("src", imgname)
+
+
+
+            $("#savePicture").submit(function (e) {
+                e.preventDefault();
+                var file = $("#fileUpload")[0].files[0];
+
+                let reader = new FileReader();
+                reader.onloadend = function (event) {
+                    let imagebase64 = reader.result;
+                    $("#profilePic2").attr("src", imagebase64);
+                    $.ajax({
+                        type: "POST",
+                        url: "/api/users/savepic",
+                        data: JSON.stringify(imagebase64),
+                        contentType: "application/json",
+                        success: function (response) {
+                            alert("success");
+                        }
+                    }).fail(function (e) {
+
+                        alert("FUCK YOU");
+                    });
+                }
+                reader.readAsDataURL(file);
+            });
+
+            $.ajax({
+                url: "/devProfile/show",
+                method: "GET",
+                success: function (data) {
+                    let devDetails = $(".devDetails");
+                    devDetails.append("<h3><strong>Details</strong></h3>");
+                    devDetails.append("<h4><strong>Full Name</strong> : " + data.fullName + "</h4");
+                    devDetails.append("<h4><strong>Age</strong> : " + data.age + "</h4");
+                    devDetails.append("<h4><strong>Phone</strong> : " + data.user.phoneNumber + "</h4");
+                    devDetails.append("<h4><strong>Gender</strong> : " + data.gender + "</h4");
+
+                    if (data.user.address) {
+                        $("#have-address").hide();
+                        $(".panel-group").append("<div class='panel panel-default row'> <div class= 'panel-body devAddress'> </div></div>");
+                        let devAddress = $(".devAddress");
+                        devAddress.append("<h3><strong>Address</strong></h3>");
+                        devAddress.append("<button style='float:right' value='" + data.user.address.addressID + "' class='btn btn-primary btn-sm editAddress'  data-toggle='modal' data-target='#Address'>Edit Address</button>");
+                        devAddress.append("<h4 style='display: inline - block'><strong>Street</strong> :<i id='streetName'>" + data.user.address.streetName + "</i></h4>");
+                        devAddress.append("<h4  style='display: inline - block'><strong>No</strong> :<i id='streetNumber'>" + data.user.address.streetNumber + "</i></h4>");
+                        devAddress.append("<h4><strong>City</strong> :<i id='adrCity'>" + data.user.address.city.cityName + "</i></h4>");
+                        devAddress.append("<h4><strong>Country</strong><i id='adrCountry'> :" + data.user.address.city.country.countryName + "</i></h4>");
+
+                        //Address ID FILL ON FORM
+
+                        $(document).on("click", ".editAddress", function () {
+                            $('input[name=addressID]').val(this.value);
+                            $("#addressFormTitle").text("Edit Address");
+                            $("input[name=streetName]").val($("#streetName").text());
+                            $("input[name=streetNumber]").val($("#streetNumber").text());
+
+                        });
+                    }
+
+                    //When focus on Country input Get countries Once
+
+                    let countriesID = [];
+
+                    $("#country").one("focus", function () {
+                        let countries = $("#countries");
+
+                        $.getJSON("/address/countries", function (data) {
+                            $.each(data, function (key, entry) {
+                                countries.append($("<option data-country-iso = '" + entry.countryIsoID + "' ></option > ").attr("value", entry.countryName).text(entry.countryName));
+                                countriesID.push(entry.countryIsoID);
+                            });
+                        });
+                    });
+
+                    //event handler that checks if country has value and enables city choice
+
+                    $("#country").on("change", function () {
+
+                        let chosenCountryID = $("#countries option[value='" + this.value + "']").attr("data-country-iso");
+
+                        if (!countriesID.includes(chosenCountryID)) {
+                            this.value = "";
+                            $("#city").attr("disabled", true);
+                            $("input[name=countryIsoID]").val("");
+                        }
+                        else {
+                            $("input[name=countryIsoID]").val(chosenCountryID);
+                        }
+
+                        citiesArr.length = 0;
+
+                        let cities = $("#cities");
+                        $("#city").val("");
+                        cities.empty();
+
+                        if (countriesID.includes(chosenCountryID)) {
+
+                            $("#city").attr("disabled", false);
+                            $.getJSON("/address/cities/" + chosenCountryID, function (data) {
+                                $.each(data, function (key, entry) {
+                                    cities.append($("<option data-cityid='" + entry.cityID + "'></option>").attr("value", entry.cityName).text(entry.cityName));
+                                    citiesArr.push(entry.cityID);
+                                });
+                            });
+                        }
+                    });
+
+
+                    $("#city").on("change", function () {
+                        let chosenCityID = $("#cities option[value='" + this.value + "']").attr("data-cityid");
+
+                        chosenCityID = parseInt(chosenCityID);
+
+
+                        if (!citiesArr.includes(chosenCityID)) {
+                            this.value = "";
+                            $("input[name=cityID]").val("");
+                        }
+
+                        else {
+                            $("input[name=cityID]").val(chosenCityID);
+                        }
+                    });
+
+                    //EDUCATION FILL
+
+                    function populate(id) {
+                        $("input[name=educationID]").val(id);
+                    };
+
+                    //Experience FILL
+
+                    function populateExp(id) {
+                        $('input[name=experienceID]').val(id);
+                    };
+
+                    // EDUCATION  PANEL
+
+                    if (data.educations.length > 0) {
+                        $(".panel-group").append("<div class='panel panel-default row'> <div class= 'panel-body devEduPanel'> </div></div>");
+
+                        //Create table
+
+                        let devEduPanel = $(".devEduPanel");
+                        devEduPanel.append("<h3><strong>Educations</strong></h3>");
+                        devEduPanel.append("<button style='float:right' class='btn btn-primary btn-sm js-update-profile-add-btn' data-toggle='modal' data-target='#Education'>Add Education</button>");
+
+                        let edutable = $('<table>').addClass("table table-bordered table-hover").attr("id", "edutable");
+
+                        let thead = $('<thead>').addClass("thead");
+
+                        let theadTr = $('<tr>');
+
+                        let theadTrTh1 = $('<th>').text("School");
+                        let theadTrTh2 = $('<th>').text("Degree");
+                        let theadTrTh3 = $('<th>').text("Field");
+                        let theadTrTh4 = $('<th>').text("Grade");
+                        let theadTrTh5 = $('<th>').text("Started In");
+                        let theadTrTh6 = $('<th>').text("Ended In");
+                        let theadTrTh7 = $('<th>').text("Action");
+
+                        theadTr.append(theadTrTh1, theadTrTh2, theadTrTh3, theadTrTh4, theadTrTh5, theadTrTh6, theadTrTh7);
+
+                        thead.append(theadTr);
+
+                        edutable.append(thead);
+
+                        let tbody = $('<tbody>').addClass("devEducation");
+
+                        edutable.append(tbody);
+
+                        devEduPanel.append(edutable);
+
+                        let devEducation = $(".devEducation");
+
+                        let row;
+                        for (var education of data.educations) {
+
+                            row = $('<tr>').attr("id", "Edu" + education.educationID);
+                            let prop = $('<td>').text(education.school);
+                            let prop1 = $('<td>').text(education.degree);
+                            let prop2 = $('<td>').text(education.field);
+                            let prop3 = $('<td>').text(education.grade);
+                            let prop4 = $('<td>').text(moment(education.startYear).format("DD-MMM-YYYY"));
+                            let prop5 = $('<td>').text(moment(education.endYear).format("DD-MMM-YYYY"));
+
+                            row.append(prop, prop1, prop2, prop3, prop4, prop5);
+
+                            let btns = document.createElement('td');
+                            btns.innerHTML = "<button value='" + education.educationID + "' class='btn btn-primary btn-sm eduEdit' data-toggle='modal' data-target='#Education'>Edit</button><button value='" + education.educationID + "' class='btn btn-sm btn-danger delEdu'>Delete</button>";
+                            row.append(btns);
+                            devEducation.prepend(row);
+                        };
+
+                    }
+
+                    $(document).on("click", ".eduEdit", function () {
+                        populate(this.value);
+                        let arr = $("#Edu" + this.value).find("td").toArray();
+                        let form = $("#EducationForm");
+                        let a = form.find(":input");
+                        form[0].reset();
+                        a[1].value = arr[0].innerText;
+                        a[2].value = arr[1].innerText;
+                        a[3].value = arr[2].innerText;
+                        a[4].value = arr[3].innerText;
+                        a[5].value = moment(arr[4].innerText).format("YYYY-MM-DD");
+                        a[6].value = moment(arr[5].innerText).format("YYYY-MM-DD");
+                        $("#eduFormTitle").text("Edit Education");
+
+                    });
+
+                    //Reseting form on Add / Edit buttons
+
+                    $(document).on("click", ".js-update-profile-add-btn", function () {
+                        let findMe = $(this).attr("data-target") + "Form";
+                        $("#eduFormTitle").text("Add Education");
+                        $("#expFormTitle").text("Add Experience");
+                        $("#addressFormTitle").text("Add Address");
+                        $("" + findMe)[0].reset();
+
+                    });
+
+                    //delete education
+
+                    $(document).on("click", ".delEdu", function (e) {
+                        let a = $(this);
+                        EducationController.deleteEducation(a);
+                    });
+
+
+                    // fill page with experience
+
+                    if (data.experiences.length > 0) {
+                        $(".panel-group").append("<div class='panel panel-default row'> <div class= 'panel-body devExpPanel'> </div></div>");
+
+                        //Create table
+                        let devExpPanel = $(".devExpPanel");
+                        devExpPanel.append("<h3><strong>Experiences</strong></h3>");
+                        devExpPanel.append("<button style='float:right' class='btn btn-primary btn-sm js-update-profile-add-btn' data-toggle='modal' data-target='#Experience'>Add Experience</button>");
+
+                        let exptable = $('<table>').addClass("table table-bordered table-hover").attr("id", "exptable");
+
+                        let thead = $('<thead>').addClass("thead");
+
+                        let theadTr = $('<tr>');
+
+                        let theadTrTh1 = $('<th>').text("Job Title");
+                        let theadTrTh2 = $('<th>').text("Company");
+                        let theadTrTh3 = $('<th>').text("Location");
+                        let theadTrTh4 = $('<th>').text("Started In");
+                        let theadTrTh5 = $('<th>').text("Ended In");
+                        let theadTrTh6 = $('<th>').text("Working Type");
+                        let theadTrTh7 = $('<th>').text("Action");
+
+                        theadTr.append(theadTrTh1, theadTrTh2, theadTrTh3, theadTrTh4, theadTrTh5, theadTrTh6, theadTrTh7);
+
+                        thead.append(theadTr);
+
+                        exptable.append(thead);
+
+                        let tbody = $('<tbody>').addClass("devExperience");
+
+                        exptable.append(tbody);
+
+                        devExpPanel.append(exptable);
+
+                        let devExperience = $(".devExperience");
+
+                        let row;
+                        for (var experience of data.experiences) {
+
+                            row = $('<tr>').attr("id", "Exp" + experience.experienceID);
+                            let prop = $('<td>').text(experience.jobTitle);
+                            let prop1 = $('<td>').text(experience.companyName);
+                            let prop2 = $('<td>').text(experience.companyLocation);
+                            let prop3 = $('<td>').text(moment(experience.startYear).format("DD-MMM-YYYY"));
+                            let prop4 = $('<td>').text(moment(experience.endYear).format("DD-MMM-YYYY"));
+                            let prop5 = $('<td>').text(experience.experienceType);
+
+                            row.append(prop, prop1, prop2, prop3, prop4, prop5);
+
+                            let btns = document.createElement('td');
+                            btns.innerHTML = "<button value='" + experience.experienceID + "' class='btn btn-primary btn-sm expEdit' data-toggle='modal' data-target='#Experience'>Edit</button><button value='" + experience.experienceID + "' class='btn btn-sm btn-danger delExp'>Delete</button>";
+                            row.append(btns);
+                            devExperience.prepend(row);
+                        };
+
+                    }
+
+                    //ExperienceEdit
+
+                    $(document).on("click", ".expEdit", function () {
+                        populateExp(this.value);
+                        let arr = $("#Exp" + this.value).find("td").toArray();
+                        let form = $("#ExperienceForm");
+                        let a = form.find(":input");
+                        form[0].reset();
+                        a[1].value = arr[0].innerText;
+                        a[2].value = arr[1].innerText;
+                        a[3].value = arr[2].innerText;
+                        a[4].value = moment(arr[3].innerText).format("YYYY-MM-DD");
+                        a[5].value = moment(arr[4].innerText).format("YYYY-MM-DD");
+                        $("#expFormTitle").text("Edit Experience");
+                    });
+
+                    //fill experience form with Job Types
+
+                    let JobType = $("#JobType");
+                    JobType.empty();
+                    JobType.append('<option selected = "true" disabled>Choose Job Type</option>');
+                    JobType.prop('selectedIndex', 0);
+
+                    JobType.one("click", function () {
+
+                        $.getJSON("/experiences/workingTypes", function (data) {
+                            $.each(data, function (key, entry) {
+                                JobType.append($("<option></option>").attr("value", key).text(entry));
+                            });
+
+                        });
+                    });
+
+                    //delete experience
+
+                    $(document).on("click", ".delExp", function () {
+                        let a = $(this);
+                        ExperienceController.deleteExp(a);
+
+                    });
+
+
+                    //fill page with skills
+
+                    if (data.developerSkills.length > 0) {
+                        $(".panel-group").append("<div class='panel panel-default row'> <div class= 'panel-body devSkillPanel'> </div></div>");
+
+                        //Create table
+                        let devSkillPanel = $(".devSkillPanel");
+                        devSkillPanel.append("<h3><strong>Skills</strong></h3>");
+                        devSkillPanel.append("<button style='float:right' class='btn btn-primary btn-sm js-update-profile-add-btn skillAdd' data-toggle='modal' data-target='#Skill'>Add Skill</button>");
+
+                        let skilltable = $('<table>').addClass("table table-bordered table-hover").attr("id", "skillTable");
+
+                        let thead = $('<thead>').addClass("thead");
+
+                        let theadTr = $('<tr>');
+
+                        let theadTrTh1 = $('<th>').text("Skill");
+
+                        let theadTrTh2 = $('<th>').text("Action");
+
+                        theadTr.append(theadTrTh1, theadTrTh2);
+
+                        thead.append(theadTr);
+
+                        skilltable.append(thead);
+
+                        let tbody = $('<tbody>').addClass("devSkill");
+
+                        skilltable.append(tbody);
+
+                        devSkillPanel.append(skilltable);
+
+                        let devSkill = $(".devSkill");
+
+
+                        let row;
+                        for (var entry of data.developerSkills) {
+
+                            row = $('<tr>');
+                            let prop = $('<td>').text(entry.skill.skillName);
+
+                            row.append(prop);
+
+                            let btns = document.createElement('td');
+                            btns.innerHTML = "<button value='" + entry.skillID + "' class='btn btn-sm btn-danger delSkill'>Delete</button>";
+                            row.append(btns);
+                            devSkill.prepend(row);
+                        };
+
+                    }
+
+                    //Get skills on add click
+
+                    let skillList = $('#skillList');
+
+                    skillList.empty();
+                    skillList.append('<option selected="true" disabled>Choose a skill</option>');
+                    skillList.prop("selectedIndex", 0);
+
+                    $(document).one("click", ".skillAdd", function () {
+                        $.getJSON("/developerSkills/skills", function (data) {
+                            $.each(data, function (key, entry) {
+                                skillList.append($('<option></option>').attr('value', entry.skillID).text(entry.skillName));
+                            });
+                        });
+                    });
+
+                    //delete skill
+                    $(document).on("click", ".delSkill", function () {
+                        let a = $(this);
+                        let value = a.val();
+
+                        DeleteDialog.deleteAction("/developerSkills/delete/", value, "Skill" , a);
+
+                    });
+                }
+
+            });
+        });
+
+            //Education post
+
+            let EduForm = $('#EducationForm');
+            EduForm.submit(function (e) {
+                e.preventDefault();
+
+                let inputs = {};
+                inputs = EduForm.serializeArray().reduce((obj, item) => Object.assign(obj, { [item.name]: item.value }), {});
+
+                if (inputs.educationID == "") {
+                    inputs.educationID = 0;
+                }
+                else {
+                    inputs.educationID = parseInt(inputs.educationID);
+                }
+
+                EducationController.createOrEditEducation(inputs);
+            });
+
+            //add skill post
+
+            let skillForm = $('#SkillForm');
+            skillForm.submit(function (e) {
+                e.preventDefault();
+
+                let value = $('#skillList').val();
+                let chosenSkill = $("#skillList option[value='" + value + "']").text();
+
+                $.ajax({
+                    url: "/developerSkills/add/" + value,
+                    method: "POST",
+                })
+                    .done(function () {
+                        $('#Skill').modal("hide");
+                        let skillTable = $(".devSkill");
+                        let skillTr = $("<tr>");
+                        let prop = $("<td>").text(chosenSkill);
+                        let btn = document.createElement("td");
+                        btn.innerHTML = "<button value='" + value + "' class='btn btn-sm btn-danger delSkill'>Delete</button>"
+
+                        skillTr.append(prop, btn);
+                        skillTable.prepend(skillTr);
+                        toastr.success("Skill was added succesfully!");
+                        skillForm[0].reset();
+                    })
+                    .fail(function (data) {
+                        toastr.error(data.responseJSON.message);
+
+                    });
+
+            });
+
+            //address Post
+
+            let addressForm = $("#AddressForm");
+            addressForm.submit(function (e) {
+                e.preventDefault();
+
+                //check if inputs are null
+
+                let addressInputs = addressForm.serializeArray().reduce((obj, item) => Object.assign(obj, { [item.name]: item.value }), {});
+
+                AddressController.createOrEditAddress(addressInputs);
+            });
+
+            //Experience Post
+
+            let experienceForm = $("#ExperienceForm");
+            experienceForm.submit(function (e) {
+                e.preventDefault();
+
+                let experienceInputs = experienceForm.serializeArray().reduce((obj, item) => Object.assign(obj, { [item.name]: item.value }), {});
+
+                experienceInputs.experienceType = $("#JobType").val();
+
+                if (experienceInputs.experienceID == "") {
+                    experienceInputs.experienceID = 0;
+                }
+                else {
+                    experienceInputs.experienceID = parseInt(experienceInputs.experienceID);
+                }
+
+                ExperienceController.createOrEditExp(experienceInputs);
+
+            });
+
+    </script>
+}

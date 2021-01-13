@@ -1,0 +1,89 @@
+﻿@model  GroupProject.ViewModels.UserViewModel
+
+@using Microsoft.AspNet.Identity;
+
+@{
+    ViewBag.Title = "HomePage";
+}
+<div class="homepage">
+    <h2>HomePage</h2>
+
+
+    <br />
+    <br />
+    <div id="create-post">
+        <div class="first-row">
+            <textarea id="input-text">What do you want to say?</textarea>
+            <div id="uploadedfile-content">
+
+                <img id="uploadedImage" />
+
+            </div>
+        </div>
+
+        <div class="between-row">
+            <i><label id="errorMsg">Some text right here</label></i>
+        </div>
+
+        <div class="second-row">
+            <form id="postform">
+                <div class="first-col">
+                    <input value="" type="file" name="PostImg" class="fileUpload" id="uploadImg-input" accept=".png,.jpg,.jpeg,.gif,.tif" placeholder="UpladImg"
+                           src="~/Images/upload_img.png" />
+                </div>
+                <div class="second-col">
+                    <input type="submit" name="submitBtn" value="submit" />
+                </div>
+            </form>
+        </div>
+
+    </div>
+    
+    <hr />
+    <div id="feed">
+        
+        
+
+    </div>
+
+</div>
+
+
+
+
+@Scripts.Render("~/bundles/HomePageAC")
+<script src="~/Scripts/jquery-3.5.1.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+
+            let feedhubSubscriber = new HomePageSubscriber(HubBooter);
+
+            let postService = new HomePagePostService();
+
+            //The feedController adds to the #feed container posts from the HubService and the  PostsService
+            //It requires an object of type FeedHubSubscriber (either a HomePageSubsriber or a OtherHomePageSubscriber object)
+            //and an object of type PostService (either HomePagePostService or a OtherHomePagePostSerivce object)
+            let feedController = new FeedController("#feed", feedhubSubscriber, postService);
+
+            // The TextAreaController adds handlers to the text area of the post being composed
+            let textAreaController = TextAreaHomeController.init("#input-text");
+
+            //the Image Selection controller is used to handle the uploading of the post's image
+            let imageSelectionController = new ImageSelectionController("#uploadImg-input", "#uploadedImage");
+
+
+            var user = @Html.Raw(Json.Encode(Model));
+            // The SubmitPostController sends a new posts to the back end to be created
+            // and on a successfull post creation, sends the post via signal R to connected followees
+            // and uses the rest of the controllers to clear the form and add to its own DOM the post
+            let submitPostController = new SubmitPostController("#postform", "#errorMsg",user, imageSelectionController, textAreaController, feedController);
+
+            //After initiating all controllers append the first 5 posts
+            feedController.AppendNextPosts();
+
+
+        });
+
+
+</script>

@@ -1,0 +1,14 @@
+﻿@model IEnumerable<GroupProject.ViewModels.CompanyViewModels.CompanyPeopleViewModel>
+
+
+
+<div class="people-working">
+    @foreach (var item in Model)
+    {
+        <div class="each-worker">
+            <img src="@item.ImageName" />
+            <p class="worker-name">@item.FullName</p>
+            <p>@item.JobTitle</p>
+        </div>
+    }
+</div>

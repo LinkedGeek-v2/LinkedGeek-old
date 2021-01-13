@@ -1,0 +1,54 @@
+﻿@model  GroupProject.ViewModels.UserViewModel
+@{
+    ViewBag.Title = "HomePage";
+}
+@using Microsoft.AspNet.Identity;
+
+
+
+<div class="homepage-container" style="margin:0 10px">
+    <div class="homepage">
+
+        <div id="feed">
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+@Scripts.Render("~/bundles/HomePageAC");
+<script>
+    $(document).ready(function () {
+
+        var user = @Html.Raw(Json.Encode(Model));
+        
+
+            let feedhubSubscriber = new OtherHomePageSubscriber(HubBooter,user.UserId);
+            
+
+            let postService = new OtherHomePagePostService(user.UserId);
+            
+            //The feedController adds to the #feed container posts from the HubService and the  PostsService
+            //It requires an object of type FeedHubSubscriber (either a HomePageSubsriber or a OtherHomePageSubscriber object)
+            //and an object of type PostService (either HomePagePostService or a OtherHomePagePostSerivce object)
+            let feedController = new FeedController("#feed", feedhubSubscriber, postService);
+
+            // The TextAreaController adds handlers to the text area of the post being composed
+            let textAreaController = TextAreaHomeController.init("#input-text");
+
+            //the Image Selection controller is used to handle the uploading of the post's image
+            let imageSelectionController = new ImageSelectionController("#uploadImg-input", "#uploadedImage");
+
+
+            //After initiating all controllers append the first 5 posts
+            feedController.AppendNextPosts();
+
+
+        });
+
+
+</script>
+

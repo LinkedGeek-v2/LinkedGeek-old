@@ -1,0 +1,12 @@
+﻿@model GroupProject.ViewModels.CompanyViewModels.JobGetViewModel
+
+<div>
+    <ul class="list-group">
+        @foreach (var job in Model.Jobs)
+        {
+            <li class="list-group-item row">
+                <span>@job.JobTitle</span>
+            </li>
+        }
+    </ul>
+</div>

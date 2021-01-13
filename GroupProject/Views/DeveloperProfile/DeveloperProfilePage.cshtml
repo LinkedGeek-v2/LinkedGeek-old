@@ -1,0 +1,357 @@
+﻿@model GroupProject.ViewModels.DeveloperViewModels.ProfilePageViewModels.DeveloperProfilePageViewModel
+
+@{
+    ViewBag.Title = "DeveloperProfilePage";
+}
+
+<div class="container profile-page-container">
+    <div class="panel-group">
+        <div class="panel panel-default row">
+            <div class="profile-images">
+                <div class="background-profile-page-image">
+                    <img id="background-pic" src="~/Images/UserProfilePics/bg-image.jpg" />
+                    <label for="bg-fileUpload"><i class="fa fa-image"></i></label>
+                    <input type="file" name="UserBackGround" id="bg-fileUpload" accept=".png,.jpg,.jpeg,.gif,.tif" />
+                </div>
+                <div id="profilePic">
+                    <label for="fileUpload">
+                        <img src="@Html.Action("UserPhotos", "User")" id="profilePic2" />
+                    </label>
+                </div>
+            </div>
+
+            <div id="update-profilePic">
+                <form name="form1" method="post" genctype="multipart/form-data">
+                </form>
+                @using (Html.BeginForm("SavePic", "Users", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data", @id = "savePicture" }))
+                {
+                    <div class="form-group">
+                        <div class="col-md-10 showing-profile-page-image">
+                            <input type="file" name="UserPhoto" id="fileUpload" accept=".png,.jpg,.jpeg,.gif,.tif" />
+                        </div>
+                    </div>
+                    @*<button type="submit" class="btn btn-primary">Update Profile Pic</button>*@
+                }
+            </div>
+
+            <div class="profileDetails">
+                <div class="devDetails">
+                    <span><strong id="fullName">@Html.DisplayFor(m => m.FullName)</strong></span>
+                    <div>
+                        <span id="currentlyWorkingJobTitle">@Html.DisplayFor(m => m.CurrentJobTitle)</span>
+                       <strong id="currentlyWorkingCompanyName">@Html.DisplayFor(m => m.WorksAt)</strong>
+                    </div>
+                    <div>
+                        <span id="adrCity">@Html.DisplayFor(m => m.User.Address.City.CityName)</span>
+                        <strong id="adrCountry">@Html.DisplayFor(m => m.User.Address.City.Country.CountryName)</strong>
+                    </div>
+                    <span><i>@Html.DisplayFor(m => m.User.UserName)</i></span>
+                    <span><i id="devAge">@Html.DisplayFor(m => m.Age)</i></span>
+                    <span><i>@Html.DisplayFor(m => m.User.FollowersCount)</i></span>
+                </div>
+
+                <div class="edit-details-buttons">
+                    @Ajax.ActionLink(Model.AddressButtonName, "AddressForm", "DeveloperProfile", new AjaxOptions
+{
+UpdateTargetId = "dev-profile-page-form-replace",
+InsertionMode = InsertionMode.Replace,
+HttpMethod = "Get",
+}, new { @id = "getAddressForm", @class = "btn btn-primary", data_toggle = "modal", data_target = "#dev-profile-page-form-replace" })
+
+                    @Ajax.ActionLink("Edit Details", "DetailsForm", "DeveloperProfile", new { FirstName = Model.FirstName , LastName = Model.LastName , DateOfBirth =Model.DateOfBirth  }, new AjaxOptions
+               {
+                   UpdateTargetId = "dev-profile-page-form-replace",
+                   InsertionMode = InsertionMode.Replace,
+                   HttpMethod = "Get"
+               }, new { @class = "btn btn-primary", data_toggle = "modal", data_target = "#dev-profile-page-form-replace" })
+                </div>
+
+                <div class="profile-page-update dropdown">
+                    <button class="btn btn-primary btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Update your Profile
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        @foreach (var action in Model.Actions)
+                        {
+                            @Ajax.ActionLink(action.Item1, action.Item2, "DeveloperProfile", new AjaxOptions
+                       {
+                           UpdateTargetId = "dev-profile-page-form-replace",
+                           InsertionMode = InsertionMode.Replace,
+                           HttpMethod = "Get"
+                       }, new { @class = "btn btn-primary", data_toggle = "modal", data_target = "#dev-profile-page-form-replace" })
+                        }
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-group">
+            <div class="panel panel-default row devEdu">
+                <div class="eduHeader  @(Model.Educations.Count != 0 ? "": "hidden")">
+                    <div class="eduHeader2">
+                        <h3><strong>Education</strong></h3>
+                        @Ajax.ActionLink("Add Education", "EducationForm", "DeveloperProfile", new AjaxOptions
+                         {
+                             UpdateTargetId = "dev-profile-page-form-replace",
+                             InsertionMode = InsertionMode.Replace,
+                             HttpMethod = "Get"
+                          }, new { @class = "btn btn-primary addBtnPanel", data_toggle = "modal", data_target = "#dev-profile-page-form-replace" })
+                    </div>
+                    <hr class="headerHr" />
+                </div>
+                <div class="devEduBody">
+                    @if (Model.Educations.Count != 0)
+                    {
+
+                        for (int i = 0; i < Model.Educations.Count; i++)
+                        {
+                            <div class="Edu-@Model.Educations[i].EducationID">
+                                <div class="devEducation">
+                                    <div class="dev-parent" id='Edu-@Model.Educations[i].EducationID'>
+                                        <div class="dev-child">
+                                            @Html.LabelFor(m => m.Educations[i].School)
+                                            @Html.DisplayFor(m => m.Educations[i].School)
+                                            @Html.LabelFor(m => m.Educations[i].Degree)
+                                            @Html.DisplayFor(m => m.Educations[i].Degree)
+                                            <br />
+                                            @Html.LabelFor(m => m.Educations[i].Field)
+                                            @Html.DisplayFor(m => m.Educations[i].Field)
+                                            @if (Model.Educations[i].Grade.HasValue)
+                                            {
+                                                @Html.LabelFor(m => m.Educations[i].Grade)
+                                                @Html.DisplayFor(m => m.Educations[i].Grade)
+                                            }
+                                            <br />
+                                            @Html.LabelFor(m => m.Educations[i].StartYear)
+                                            @Html.DisplayFor(m => m.Educations[i].StartYear)
+                                            <br />
+                                            @Html.LabelFor(m => m.Educations[i].EndYear)
+                                            @Html.DisplayFor(m => m.Educations[i].EndYear)
+                                        </div>
+                                        <div class="dev-buttons">
+                                            @Ajax.ActionLink(" ", "EducationForm", "DeveloperProfile", Model.Educations[i] , new AjaxOptions
+                                       {
+                                           UpdateTargetId = "dev-profile-page-form-replace",
+                                           InsertionMode = InsertionMode.Replace,
+                                           HttpMethod = "Get"
+                                       }, new { @class = "fa fa-cog", data_toggle = "modal", data_target = "#dev-profile-page-form-replace" })
+
+                                            @*search how to request antiforgery token on click button and then pass it in delete dialog box post*@
+                                            <button class="fa fa-trash delete-btn delEdu" value="@Model.Educations[i].EducationID"></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="rowHr" />
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-group">
+            <div class="panel panel-default row devExp">
+                <div class="expHeader  @(Model.Experiences.Count != 0 ? "": "hidden")">
+                    <div class="expHeader2">
+                        <h3><strong>Experience</strong></h3>
+                        @Ajax.ActionLink("Add Experience", "ExperienceForm", "DeveloperProfile", new AjaxOptions
+                         {
+                             UpdateTargetId = "dev-profile-page-form-replace",
+                             InsertionMode = InsertionMode.Replace,
+                              HttpMethod = "Get"
+                          }, new { @class = "btn btn-primary addBtnPanel", data_toggle = "modal", data_target = "#dev-profile-page-form-replace" })
+                    </div>
+                    <hr class="headerHr" />
+                </div>
+                <div class="devExpBody">
+                    @if (Model.Experiences.Count != 0)
+                    {
+                       
+                        for (int i = 0; i < Model.Experiences.Count; i++)
+                        {
+                            <div class="Exp-@Model.Experiences[i].ExperienceID">
+                                <div class="devExperience">
+                                    <div class="dev-parent" id='Exp-@Model.Experiences[i].ExperienceID'>
+                                        <div class="dev-child">
+                                            @Html.LabelFor(m => m.Experiences[i].JobTitle)
+                                            <span>@Html.DisplayFor(m => m.Experiences[i].JobTitle)</span>
+                                            @Html.LabelFor(m => m.Experiences[i].CompanyName)
+                                            @if (Model.Experiences[i].CompanyWorkingID != null)
+                                            {
+                                                @Html.ActionLink(Model.Experiences[i].CompanyName, "OtherCompProfilePage", "OtherCompanyProfilePage", new { id = Model.Experiences[i].CompanyWorkingID }, null)
+                                            }
+                                            else
+                                            {
+                                                <span>@Html.DisplayFor(m => m.Experiences[i].CompanyName)</span>
+                                            }
+                                            <br />
+                                            @Html.LabelFor(m => m.Experiences[i].StartYear)
+                                            <span>@Html.DisplayFor(m => m.Experiences[i].StartYear)</span>
+                                            @Html.LabelFor(m => m.Experiences[i].EndYear)
+                                            <span>@Html.DisplayFor(m => m.Experiences[i].EndYear)</span>
+                                            <br />
+                                            @Html.LabelFor(m => m.Experiences[i].ExperienceType)
+                                            <span>@Html.DisplayFor(m => m.Experiences[i].ExperienceType)</span>
+                                        </div>
+
+                                        <div class="dev-buttons">
+                                            @Ajax.ActionLink(" ", "ExperienceForm", "DeveloperProfile", Model.Experiences[i], new AjaxOptions
+                                  {
+                                      UpdateTargetId = "dev-profile-page-form-replace",
+                                      InsertionMode = InsertionMode.Replace,
+                                      HttpMethod = "Get"
+                                  }, new { @class = "fa fa-cog", data_toggle = "modal", data_target = "#dev-profile-page-form-replace" })
+
+                                            @*search how to request antiforgery token on click button and then pass it in delete dialog box post*@
+                                            <button class="fa fa-trash delete-btn delExp" value="@Model.Experiences[i].ExperienceID"></button>
+                                            @*check if education belongs to developer on API post controller*@
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <hr class="rowHr" />
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+
+        </div>
+
+        <div class="panel-group">
+            <div class="panel panel-default row devSkills">
+                <div class="skillHeader  @(Model.DeveloperSkills.Count != 0 ? "": "hidden")">
+                    <div class="skillHeader2">
+                        <h3><strong>Skills</strong></h3>
+                        @Ajax.ActionLink("Add a new Skill", "SkillForm", "DeveloperProfile", new AjaxOptions
+                         {
+                             UpdateTargetId = "dev-profile-page-form-replace",
+                             InsertionMode = InsertionMode.Replace,
+                              HttpMethod = "Get"
+                          }, new { @class = "btn btn-primary addBtnPanel", data_toggle = "modal", data_target = "#dev-profile-page-form-replace" })
+                    </div>
+                    <hr class="headerHr" />
+                </div>
+                <div class="devSkillBody">
+                    @if (Model.DeveloperSkills.Count != 0)
+                    {
+
+                        for (int i = 0; i < Model.DeveloperSkills.Count; i++)
+                        {
+                            <div class="Skill-@Model.DeveloperSkills[i].SkillID">
+                                <div class="devSkill">
+                                    <div class="dev-parent" id='Skill-@Model.DeveloperSkills[i].SkillID'>
+
+                                        <div class="dev-child">  <span>@Html.DisplayFor(m => m.DeveloperSkills[i].Skill.SkillName)</span></div>
+
+                                        <div class="dev-buttons">
+                                            <button class="fa fa-trash delete-btn delSkill" value="@Model.DeveloperSkills[i].SkillID"></button>
+                                        </div>
+
+                                        @*search how to request antiforgery token on click button and then pass it in delete dialog box post*@
+
+                                        @*check if education belongs to developer on API post controller*@
+
+                                    </div>
+                                </div>
+                                <hr class="rowHr" />
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+        <div id="dev-profile-page-form-replace" class="modal fade" role="dialog"></div>
+
+    </div>
+</div>
+
+
+
+@section scripts {
+    @Scripts.Render("~/bundles/ProfilePageGN")
+    <script src="~/Scripts/HomePageAC/Services/networkService.js"></script>
+    <script src="~/Scripts/HomePageAC/Controllers/imageSelectionController.js"></script>
+    <script>
+        let countriesID = [];
+        let citiesArr = [];
+        $(document).ready(function () {
+            //********************* Images Section ***************************
+
+            new ProfileImageSelectionController('#fileUpload', '#profilePic2');
+
+            new ProfileImageSelectionController('#bg-fileUpload', '#background-pic');
+
+            //******************** Prevent Default submit on Forms ***************************
+
+
+            $(document).on("click", ".submit-profile-page-forms", function (e) {
+                e.preventDefault();
+                switch (this.value) {
+                    case "1":
+                        if ($('#AddressForm').valid()) {
+                            let addressForm = $("#AddressForm");
+                            let addressInputs = addressForm.serializeArray().reduce((obj, item) => Object.assign(obj, { [item.name]: item.value }), {});
+                            AddressController.createOrEditAddress(addressInputs);
+                        }
+                        break;
+                    case "2":
+                        if ($('#DetailsForm').valid()) {
+                            let inputs = $('#DetailsForm').serializeArray().reduce((obj, item) => Object.assign(obj, { [item.name]: item.value }), {});
+                            DetailsController.saveDetails(inputs);
+
+                        }
+                        break;
+                    case "3":
+                        if ($("#EducationForm").valid()) {
+                            let inputs = $("#EducationForm").serializeArray().reduce((obj, item) => Object.assign(obj, { [item.name]: item.value }), {});
+                            EducationController.createOrEditEducation(inputs);
+                        }
+                        break;
+                    case "4":
+
+                        if ($("#ExperienceForm").valid()) {
+                            let inputs = $("#ExperienceForm").serializeArray().reduce((obj, item) => Object.assign(obj, { [item.name]: item.value }), {});
+                            ExperienceController.createOrEditExp(inputs);
+                   
+                        }
+
+                        break;
+                    case "5":
+                        let inputsSkill = $("#SkillForm").serializeArray().reduce((obj, item) => Object.assign(obj, { [item.name]: item.value }), {});
+                        if (inputsSkill.SkillID == "0") {
+                            toastr.error("You must choose a skill!");
+                        }
+                        else {
+                            SkillController.addSkill(inputsSkill);
+                        }
+
+                        break;
+                    default:
+                }
+            });
+
+            deleteListener.Delete("Edu", "Education", "educations");
+            deleteListener.Delete("Exp", "Experience", "experiences");
+            deleteListener.Delete("Skill", "Skill", "developerSkills");
+
+
+        });  //DOCUMENT READY FINISH
+
+
+
+
+
+
+
+
+    </script>
+
+}
