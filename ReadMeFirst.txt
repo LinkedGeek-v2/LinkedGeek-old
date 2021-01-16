@@ -1,3 +1,6 @@
+--------------------------- IGNORE PDF FOLDER  --------------------------------------
+(This was made after project deadline)
+
 Steps:
 
 1) Change Connection String
