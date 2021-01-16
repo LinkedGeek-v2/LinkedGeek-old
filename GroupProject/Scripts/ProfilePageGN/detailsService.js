@@ -1,5 +1,7 @@
 ﻿let DetailsService = function () {
 
+
+    // to be fixed, doesnt post on dev action
     let addDetails = function (formData, done, fail,value) {
 
         if (value) {
