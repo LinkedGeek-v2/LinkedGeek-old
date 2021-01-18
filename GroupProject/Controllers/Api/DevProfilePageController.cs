@@ -8,14 +8,12 @@ using System;
 using System.Web.Http;
 
 namespace GroupProject.Controllers.Api
-{
-                                 //***************** OLD API CONTROLLER FOR OLD PROFILE PAGE - REPLACED BY MVC DeveloperProfileController
+{                                 //***************** OLD API CONTROLLER FOR OLD PROFILE PAGE - REPLACED BY MVC DeveloperProfileController
     [Authorize]
     [RoutePrefix("devProfile")]
     [Obsolete("This controller has been replaced by MVC controller DeveloperProfileController")]
     public class DevProfilePageController : ApiController
     {
-
         private readonly ApplicationDbContext _db;
         private readonly DeveloperRepository _developerRepository;
         private readonly CompanyRepository _companyRepository;
@@ -34,31 +32,23 @@ namespace GroupProject.Controllers.Api
         public IHttpActionResult ShowProfilePage()
         {
             var Id = User.Identity.GetUserId();
-
             var developer = _developerRepository.GetDeveloperForProfilePageWithID(Id);
-
             var devDto = Mapper.Map<Developer, DeveloperDto>(developer);
 
             return Ok(devDto);
         }
-
 
         [Route("others")]
         [HttpGet]
         public IHttpActionResult ShowOtherDevProfiles(string id)
         {
-
             var developer = _developerRepository.GetDeveloperForProfilePageWithID(id);
-
             if (developer == null) return NotFound();
-
 
             var devDto = Mapper.Map<Developer, DeveloperDto>(developer);
 
             return Ok(devDto);
         }
-
-
 
         [Route("getCompanies")]
         [HttpGet]

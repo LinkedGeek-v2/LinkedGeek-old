@@ -26,7 +26,7 @@
 
         try {
             $("#comp-profile-page-form-replace").modal('hide');
-            toastr.success("Details have been saved! Please refresh your Page!");
+           
         }
         catch {
 

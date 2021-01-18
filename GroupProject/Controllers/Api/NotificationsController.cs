@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity;
 
 namespace GroupProject.Controllers.Api
 {
+    [Authorize]
     [RoutePrefix("api/notifications")]
     public class NotificationsController : ApiController
     {

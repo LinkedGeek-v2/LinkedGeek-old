@@ -16,7 +16,6 @@ namespace GroupProject.Hubs
         private string CurrentUserName => Context.User.Identity.Name;
 
 
-
         public override Task OnConnected()
         {
             _unitOfWork.Connect(CurrentUserID, CurrentUserName, CurrentUserConnectionID);
@@ -28,7 +27,7 @@ namespace GroupProject.Hubs
 
             if (message.Contains("<script>"))
             {
-
+                //do nothing 
             }
             else if(!string.IsNullOrEmpty(message))
             {
@@ -47,8 +46,6 @@ namespace GroupProject.Hubs
                     Clients.Client(toWhom.ConnectionID).receive(messageJson);
                 }
             }
-
-
         }
 
         public void GetSelectedUserChatHistory(string withWhoId, int timesRequested)
@@ -63,12 +60,12 @@ namespace GroupProject.Hubs
             return base.OnDisconnected(stopCalled);
         }
 
-
         public void CheckUserStatus(string whoID)
         {
-            bool isActive = _unitOfWork.UserStatus(whoID);
-            Clients.Client(CurrentUserConnectionID).userStatus(isActive);
-
+            bool IsActive = false;
+            var user = _unitOfWork.UserStatus(whoID);
+            if (user != null) IsActive = true;
+            Clients.Client(CurrentUserConnectionID).userStatus(IsActive);
         }
     }
 }

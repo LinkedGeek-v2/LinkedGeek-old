@@ -28,5 +28,13 @@ namespace GroupProject.ViewModels.CompanyViewModels
             "People",
             "Applicants"
         };
+
+        public CompanyFormViewModel()
+        { }
+
+        public CompanyFormViewModel(string companyId)
+        {
+            CompanyID = companyId;
+        }
     }
 }

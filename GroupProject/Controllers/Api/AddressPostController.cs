@@ -19,9 +19,7 @@ namespace GroupProject.Controllers.Api
         private readonly UnitOfWork _unitOfWork;
         private readonly CityRepository _cityRepository;
         private readonly CountryRepository _countryRepository;
-
         private string userID => User.Identity.GetUserId();
-
 
         public AddressPostController()
         {
@@ -37,7 +35,6 @@ namespace GroupProject.Controllers.Api
         public IHttpActionResult GetCitiesOnClick(string Id)
         {
             var cities = _cityRepository.GetCitiesOfCountry(Id);
-
             if(cities == null) return BadRequest("Wrong Id");
 
             return Ok(cities);
@@ -46,7 +43,6 @@ namespace GroupProject.Controllers.Api
         [Route("countries")]
         public IHttpActionResult GetCountriesOnClick()
         {
-
             var countries = _countryRepository.GetCountries();
 
             return Ok(countries);
@@ -57,7 +53,6 @@ namespace GroupProject.Controllers.Api
         [HttpPost]
         public IHttpActionResult AddorEditAddress(AddressPostDto addressPostDto)
         {
-
             if (!ModelState.IsValid)
             {
                 var a = ModelState.Values.SelectMany(msE => msE.Errors).Select(err => err.ErrorMessage);
@@ -70,16 +65,13 @@ namespace GroupProject.Controllers.Api
             }
 
             addressPostDto.MatchWithUser(userID);
-
             var address = Mapper.Map<AddressPostDto, Address>(addressPostDto);
-
             _addressRepository.AddOrEdit(address);
 
             _unitOfWork.Save();
 
             return Ok();
         }
-
 
         protected override void Dispose(bool disposing)
         {

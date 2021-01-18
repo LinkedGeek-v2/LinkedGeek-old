@@ -26,7 +26,6 @@ namespace GroupProject.ViewModels.DeveloperViewModels.ProfilePageViewModels
         [Range(5.0, 10.0, ErrorMessage = ("Grade must be between 5.00 and 10.00!"))]
         public double? Grade { get; set; }
 
-
         [Display(Name = "Started In: ")]
         [DataType(DataType.DateTime)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MMM-yyyy}")]

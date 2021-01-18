@@ -36,7 +36,7 @@ namespace GroupProject.Models.DeveloperModels
         [FutureDate("StartYear")]
         public DateTime? EndYear { get; private set; }
 
-        public string DeveloperID { get; private set; }                     //does this needs to be required for database???
+        public string DeveloperID { get; private set; }
         public Developer Developer { get; set; }
 
         private Education() { }
@@ -49,8 +49,6 @@ namespace GroupProject.Models.DeveloperModels
         {
             EducationID = educationID;
         }
-
-        //public static Education CreateOrUpdate(EducationPostDto educationPostDto) => Mapper.Map<EducationPostDto, Education>(educationPostDto);
 
         public static Education Create(EducationPostDto educationPostDto,string UserID)
         {

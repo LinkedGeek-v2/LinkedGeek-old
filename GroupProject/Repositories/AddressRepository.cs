@@ -26,5 +26,10 @@ namespace GroupProject.Repositories
                 _db.Entry(address).State = EntityState.Added;
             }
         }
+
+        public Address GetAddressWithId(string UserID)
+        {
+            return _db.Addresses.SingleOrDefault(adr => adr.AddressID == UserID);
+        }
     }
 }

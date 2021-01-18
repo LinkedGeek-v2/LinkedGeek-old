@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace GroupProject.ViewModels.CompanyViewModels
+﻿namespace GroupProject.ViewModels.CompanyViewModels
 {
     public class CompanyPeopleViewModel
     { 
@@ -12,6 +7,4 @@ namespace GroupProject.ViewModels.CompanyViewModels
         public string FullName{ get; set; }
         public string JobTitle {get; set; }
     }
-
-
 }

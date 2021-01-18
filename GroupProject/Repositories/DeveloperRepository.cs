@@ -11,14 +11,9 @@ namespace GroupProject.Repositories
 
         public DeveloperRepository(ApplicationDbContext db)
         {
-            _db = new ApplicationDbContext();
+            _db = db;
         }
 
-
-        //public List<CompanyNamesForDeveloperProfileViewModel> getMe()
-        //{
-        //    return db.Developers.Where(d => d.FirstName == "asdfas").Select(d => d.Experiences.Single(e => e.EndYear == null));
-        //}
 
         public Developer GetDeveloperForProfilePageWithID(string UserID)
         {

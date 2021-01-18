@@ -1,7 +1,6 @@
 ﻿using GroupProject.ApiModels.CompanyDTOs;
 using GroupProject.ApiModels.Incoming.ProfilePage;
 using GroupProject.DAL;
-using GroupProject.Models.DeveloperModels;
 using Microsoft.AspNet.Identity;
 using System.Linq;
 using System.Web.Http;
@@ -14,7 +13,6 @@ namespace GroupProject.Controllers.Api
     {
         private readonly ApplicationDbContext _db;
         private string userId => User.Identity.GetUserId();
-
 
         public DetailsForBothController()
         {
@@ -38,7 +36,6 @@ namespace GroupProject.Controllers.Api
                 return BadRequest(bf);
             }
 
-
             var d = _db.Developers.SingleOrDefault(x => x.DeveloperID == userId);
 
             d.FirstName = details.FirstName;
@@ -49,11 +46,9 @@ namespace GroupProject.Controllers.Api
             _db.SaveChanges();
 
             var age = d.Age;
+
             return Ok(age);
-
         }
-
-
 
         [HttpPatch]
         [Route("comp")]
@@ -71,7 +66,6 @@ namespace GroupProject.Controllers.Api
                 return BadRequest(bf);
             }
 
-
             var c = _db.Companies.SingleOrDefault(x => x.CompanyID == userId);
 
             c.CompanyName = details.CompanyName;
@@ -82,8 +76,6 @@ namespace GroupProject.Controllers.Api
             _db.SaveChanges();
 
             return Ok();
-
-
         }
     }
 }

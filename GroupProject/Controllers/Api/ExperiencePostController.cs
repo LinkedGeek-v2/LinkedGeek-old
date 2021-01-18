@@ -33,7 +33,6 @@ namespace GroupProject.Controllers.Api
         public IHttpActionResult AddEditExperience(ExperiencePostDto experiencePostDto)
         {
             var userId = User.Identity.GetUserId();
-
             if (!ModelState.IsValid)
             {
                 var a = ModelState.Values.SelectMany(msE => msE.Errors).Select(err => err.ErrorMessage);
@@ -47,26 +46,22 @@ namespace GroupProject.Controllers.Api
             }
 
             var experience = Experience.Create(experiencePostDto, userId);
-
             _experienceRepository.AddOrEdit(experience);
 
             _unitOfWork.Save();
-
-
 
             var id = experience.ExperienceID;
 
             return Ok(id);
         }
 
-
         [Route("delete/{id:int}")]
         [HttpDelete]
         public IHttpActionResult DeleteExperience(int id)
         {
             var experience = Experience.Delete(id);
-
             _experienceRepository.Delete(experience);
+
             _unitOfWork.Save();
 
             return Ok();
@@ -77,7 +72,6 @@ namespace GroupProject.Controllers.Api
         [HttpGet]
         public IHttpActionResult GetTypeOfJobs()
         {
-
             var jobTypes = Enum.GetNames(typeof(WorkingType));
 
             return Ok(jobTypes);

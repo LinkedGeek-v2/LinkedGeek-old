@@ -1,6 +1,4 @@
-﻿
-
-let JobsController = function () {
+﻿let JobsController = function () {
     //Return this function
     function jobFormSubmit(table) {
         $("#jobForm").submit(function (e) {
@@ -57,7 +55,7 @@ let JobsController = function () {
                         .text("Applied")
                         .attr("disabled", true);
 
-                    NotificationService.notify("We have a new applicant!", companyId);
+                    NotificationService.notify("You have a new applicant!", companyId);
 
                     toastr.success("Your application is accepted!");
                 })
@@ -79,7 +77,7 @@ let JobsController = function () {
             postFormData(formData, table);
         }
         else {
-            toastr.error("Please fill at least one field");
+            toastr.error("Please fill either title or city field");
         }
     }
 

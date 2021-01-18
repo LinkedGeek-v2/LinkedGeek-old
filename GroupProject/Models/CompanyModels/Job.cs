@@ -38,6 +38,7 @@ namespace GroupProject.Models.CompanyModels
             JobID = id;
         }
 
+
         public Job(string jobTitle, string jobDescription, WorkingType jobType, string companyID)
         {
             JobTitle = jobTitle;

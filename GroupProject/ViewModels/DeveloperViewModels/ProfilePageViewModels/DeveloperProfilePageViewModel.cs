@@ -11,7 +11,6 @@ namespace GroupProject.ViewModels.DeveloperViewModels.ProfilePageViewModels
         public string FullName { get; set; }
         public string FirstName { get; set; }
         public string LastName{ get; set; }
-
         public DateTime? DateOfBirth { get; set; }
 
         [DisplayFormat(ConvertEmptyStringToNull = true, NullDisplayText = "" ,DataFormatString ="{0} years old")]     //check if convert empty string to null is needed
@@ -29,7 +28,6 @@ namespace GroupProject.ViewModels.DeveloperViewModels.ProfilePageViewModels
         public UserProfilePageViewModel User { get; set; }
         public List<EducationProfilePageViewModel> Educations { get; set; }
         public List<ExperienceProfilePageViewModel> Experiences { get; set; }
-
         public List<DeveloperSkillsProfilePageViewModel> DeveloperSkills { get; set; }
 
         public List<Tuple<string, string>> Actions { get; set; } = new List<Tuple<string, string>>
@@ -38,7 +36,6 @@ namespace GroupProject.ViewModels.DeveloperViewModels.ProfilePageViewModels
             new Tuple<string, string>("Add Experience", "ExperienceForm"),
             new Tuple<string, string>("Add Skill", "SkillForm"),
         };
-
 
         public DeveloperProfilePageViewModel()
         {

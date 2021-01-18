@@ -51,15 +51,12 @@ namespace GroupProject.Repositories
         public IEnumerable<ApplicationUser> StrongOfStrongFollowees(string id) //recommended Users of a user cant be queried for a specific ID...
         {
             //Get all followees that follow me back (STRONG FRIENDSHIP)
-
             var StrongFriends = GetStrongFriends(id);
 
             // now get all the strong friends of my strong friends (stored in a list of lists)
-
             var StrongOfStrong2 = StrongFriends.Select(GetStrongFriends);
 
             // flatten the list of lists to a single and distinct list with all the strong friends of my strongfriends
-
             var flattened = StrongOfStrong2.SelectMany(p => p).Distinct().ToList();
             //flattened needs to be executed (toList) because we need to compare it against my followees
 
@@ -68,7 +65,6 @@ namespace GroupProject.Repositories
 
             var myFollowees = Followees(id);
 
-
             var recommended = flattened.Where(flat => myFollowees.All(myF => myF.Id != flat.Id) && flat.Id != id);
             return recommended.ToList();
         }
@@ -76,26 +72,23 @@ namespace GroupProject.Repositories
         private IQueryable<ApplicationUser> GetStrongFriends(ApplicationUser user)
         {
             var id = user.Id;
-
             var StrongFollowees = context.Followings
-
                 .Where(f => f.FolloweeID == id && context.Followings.Any(wings => wings.FolloweeID == f.FollowerID && wings.FollowerID == id))
-
                 .Select(f => f.Follower)
                 .Include(followee => followee.Developer.CompanyWorking)
                 .Include(followee => followee.Company);
+
             return StrongFollowees;
         }
 
         public IEnumerable<ApplicationUser> GetStrongFriends(string id)
         {
             var StrongFollowees = context.Followings
-
                 .Where(f => f.FolloweeID == id && context.Followings.Any(wings => wings.FollowerID == f.FollowerID))
-
                 .Select(f => f.Follower)
                 .Include(followee => followee.Developer.CompanyWorking)
                 .Include(followee => followee.Company);
+
             return StrongFollowees.ToList();
         }
 
@@ -107,23 +100,23 @@ namespace GroupProject.Repositories
                 .Include(wee => wee.Company)
                 .Include(wee => wee.Developer.CompanyWorking);
 
-
             var Recommended = context.Users
                 .Include(u => u.Developer.CompanyWorking)
                 .Include(u => u.Company)
                 .Where(u => !Followees.Contains(u) && u.Id != UserId);
+
             return Recommended;
         }
 
         public bool UnFollow(string followerId, string followeeId)
         {
-
             var currUser = context.Users.Include(u => u.Followees).SingleOrDefault(u => u.Id == followerId);
 
             //var removedUser = context.Followings.Select(f=>f.Followee).SingleOrDefault(followee=>followee.Id==id);
             var removedUser = context.Users.SingleOrDefault(u => u.Id == followeeId);
             if (removedUser == null)
                 return false;
+
             currUser.UnFollow(removedUser);
 
             return true;
@@ -131,11 +124,11 @@ namespace GroupProject.Repositories
 
         public bool Follow(string followerId, string followeeId) //works without include followees???? check
         {
-
             var currUser = context.Users.Include(u => u.Followees).SingleOrDefault(u => u.Id == followerId);
             var addedUser = context.Users.SingleOrDefault(u => u.Id == followeeId);
             if (addedUser == null)
                 return false;
+
             var followed = currUser.Follow(addedUser);
 
             return true;

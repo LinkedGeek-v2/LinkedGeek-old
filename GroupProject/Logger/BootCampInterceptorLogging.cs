@@ -1,8 +1,6 @@
-﻿using System;
-using System.Data.Common;
+﻿using System.Data.Common;
 using System.Data.Entity.Infrastructure.Interception;
 using System.Diagnostics;
-using System.Linq;
 
 namespace GroupProject.Logger
 {

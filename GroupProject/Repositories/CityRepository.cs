@@ -16,8 +16,7 @@ namespace GroupProject.Repositories
 
 
         public List<City> GetCitiesOfCountry(string countryIsoID)
-        {
-           
+        {           
             if(string.IsNullOrEmpty(countryIsoID))
             {
                 return null;

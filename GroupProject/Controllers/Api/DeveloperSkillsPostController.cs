@@ -37,14 +37,12 @@ namespace GroupProject.Controllers.Api
             if (_developerSkillsRepository.ExistInDB(userID, id)) return BadRequest("You already have this skill!");
 
             var developerSkill = DeveloperSkills.Create(id, userID);
-
             _developerSkillsRepository.Add(developerSkill);
 
             _unitOfWork.Save();
 
             return Ok();
         }
-
 
         [Route("skills")]
         [HttpGet]
@@ -55,15 +53,12 @@ namespace GroupProject.Controllers.Api
             return Ok(skills);
         }
 
-
         [Route("delete/{id:int}")]
         [HttpDelete]
         public IHttpActionResult DeleteSkill(int id)
         {
             var userId = User.Identity.GetUserId();
-
             var developerSkill = DeveloperSkills.Create(id,userId);
-
             _developerSkillsRepository.Delete(developerSkill);
 
             _unitOfWork.Save();

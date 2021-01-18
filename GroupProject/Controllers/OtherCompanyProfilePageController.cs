@@ -13,6 +13,7 @@ using System.Web.Mvc;
 
 namespace GroupProject.Controllers
 {
+    [AllowAnonymous]
     public class OtherCompanyProfilePageController : Controller
     {
         private readonly ApplicationDbContext db;
@@ -39,13 +40,10 @@ namespace GroupProject.Controllers
             return View("../Company/OtherProfilePage/OtherCompProfilePage", viewModel);
         }
 
-        //    return View("../Company/OtherProfilePage/OtherCompProfilePage", viewModel);
-        //}
         public ActionResult Home(string companyId)
         {
             if (companyId == null)
                 companyId = User.Identity.GetUserId();
-                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             var user = db.Users.Include(u => u.Company).Include(u => u.Developer).SingleOrDefault(u => u.Id == companyId);
             var photo = user.GetUserPhotoPath();
@@ -56,6 +54,7 @@ namespace GroupProject.Controllers
                 Name = user.IsDeveloper ? user.Developer.FullName : user.Company.CompanyName,
                 UserImageUrl = user.GetUserPhotoPath(),
             };
+
             return PartialView("../User/OtherHomePage",view);
         }
 
@@ -83,7 +82,6 @@ namespace GroupProject.Controllers
         public ActionResult People(string companyId)
         {
             var workers = userRepository.GetWorkers(companyId);
-
             var workersViewModel = new List<CompanyPeopleViewModel>();
 
             foreach (var worker in workers)

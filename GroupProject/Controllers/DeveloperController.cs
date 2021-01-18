@@ -4,8 +4,8 @@ using GroupProject.Models.DeveloperModels;
 using GroupProject.Persistence;
 using GroupProject.Repositories;
 using GroupProject.ViewModels;
-using Microsoft.AspNet.Identity;
 using System;
+using System.Net;
 using System.Web.Mvc;
 
 namespace GroupProject.Controllers
@@ -23,25 +23,20 @@ namespace GroupProject.Controllers
             unitOfWork = new UnitOfWork(db);
         }
 
-        public ActionResult DevJobsPage()
+        public ActionResult CreateDeveloper(string userId)
         {
+            var viewModel = new DeveloperFormViewModel(userId);
 
-            return View();
-        }
-
-
-
-        public ActionResult CreateDeveloper()
-        {
-            return View("DeveloperForm");
+            return View("DeveloperForm", viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateDeveloper(DeveloperFormViewModel viewModel)
         {
+            if (!ModelState.IsValid) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
             var developer = Mapper.Map<DeveloperFormViewModel, Developer>(viewModel);
-            developer.DeveloperID = User.Identity.GetUserId();
             try
             {
                 developerRepository.AddDeveloper(developer);

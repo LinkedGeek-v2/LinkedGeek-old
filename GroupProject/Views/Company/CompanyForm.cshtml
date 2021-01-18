@@ -1,4 +1,4 @@
-﻿@model GroupProject.Models.CompanyModels.Company
+﻿@model GroupProject.ViewModels.CompanyViewModels.CompanyFormViewModel
 
 <h2>Welcome!</h2>
 
@@ -7,6 +7,8 @@
     @Html.AntiForgeryToken()
 
     <div>
+        @Html.HiddenFor(model => model.CompanyID)
+
         <div class="form-group">
             @Html.LabelFor(model => model.CompanyName)
             @Html.EditorFor(model => model.CompanyName, new { @class = "form-control" })

@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace GroupProject.Controllers
 {
+    [Authorize]
     public class JobController : Controller
     {
         private readonly ApplicationDbContext db;
@@ -26,7 +27,6 @@ namespace GroupProject.Controllers
             return View();
         }
 
-        [Authorize]
         [HttpPost]
         public ActionResult CreateJob(JobPostViewModel viewModel)
         {
@@ -39,7 +39,6 @@ namespace GroupProject.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.OK); //return Json();
         }
 
-        [Authorize]
         [HttpDelete]
         public ActionResult DeleteJob(int id)
         {

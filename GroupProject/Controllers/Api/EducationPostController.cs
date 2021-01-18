@@ -33,7 +33,6 @@ namespace GroupProject.Controllers.Api
         {
 
             var userID = userId;
-
             if (!ModelState.IsValid)
             {
                 var a = ModelState.Values.SelectMany(msE => msE.Errors).Select(err => err.ErrorMessage);
@@ -47,7 +46,6 @@ namespace GroupProject.Controllers.Api
             }
 
             var education = Education.Create(educationPostDto , userId);
-
             educationRepository.AddOrEdit(education);
 
             _unitOfWork.Save();
@@ -57,14 +55,11 @@ namespace GroupProject.Controllers.Api
             return Ok(id);
         }
 
-
         [Route("delete/{id:int}")]
         [HttpDelete]
         public IHttpActionResult DeleteEducation(int id)
         {
-
             var education = Education.Delete(id);
-
             educationRepository.Delete(education);
 
             _unitOfWork.Save();

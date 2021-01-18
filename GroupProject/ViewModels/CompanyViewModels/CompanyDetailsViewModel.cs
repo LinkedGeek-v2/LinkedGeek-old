@@ -5,7 +5,6 @@ namespace GroupProject.ViewModels.CompanyViewModels
 {
     public class CompanyDetailsViewModel
     {
-
         [Display(Name = "Company Name")]
         [Required(ErrorMessage = "You must enter your company's name!")]
         [StringLength(100, MinimumLength = 2, ErrorMessage = ("Company name must be between 2 and 100 characters!"))]

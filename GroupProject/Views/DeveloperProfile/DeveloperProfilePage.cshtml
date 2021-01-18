@@ -305,7 +305,7 @@ HttpMethod = "Get",
                     case "2":
                         if ($('#DetailsForm').valid()) {
                             let inputs = $('#DetailsForm').serializeArray().reduce((obj, item) => Object.assign(obj, { [item.name]: item.value }), {});
-                            DetailsController.saveDetails(inputs);
+                            DetailsController.saveDetails(inputs,"developer");
 
                         }
                         break;

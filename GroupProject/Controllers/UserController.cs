@@ -31,9 +31,9 @@ namespace GroupProject.Controllers
         {
             //If no Id is given then get my photo
             var userId = Id ?? User.Identity.GetUserId();
-
             var user = context.Users.Include(u => u.Developer).FirstOrDefault(d => d.Id == userId);
             var photopath = user.GetUserPhotoPath();
+
             return user.GetUserPhotoPath();
         }
 

@@ -20,7 +20,6 @@ namespace GroupProject.ApiModels.Incoming.ProfilePage
         public void MatchWithUser(string UserId)
         {
             AddressID = UserId;
-
         }
     }
 }

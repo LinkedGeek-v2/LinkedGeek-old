@@ -5,7 +5,6 @@ using GroupProject.Models.DeveloperModels;
 using GroupProject.Models.SharedModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -24,12 +23,12 @@ namespace GroupProject.Models
         public Company Company { get; set; }
         public bool IsDeveloper { get; set; }
 
-
         public ApplicationUser()
         {
             Followees = new List<Following>();
             Followers = new List<Following>();
         }
+
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -74,12 +73,12 @@ namespace GroupProject.Models
                         return ImageHelper.GenericFemaleUserImage;
                 }
                 else
+                {
                     return ImageHelper.GenericCompanyUserImage;
-
+                }                  
             }
 
             return ImageName;
         }
-
     }
 }

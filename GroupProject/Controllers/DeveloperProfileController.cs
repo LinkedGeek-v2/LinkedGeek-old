@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using GroupProject.DAL;
 using GroupProject.Models.DeveloperModels;
+using GroupProject.Models.SharedModels;
 using GroupProject.Repositories;
 using GroupProject.ViewModels;
 using GroupProject.ViewModels.DeveloperViewModels.ProfilePageViewModels;
@@ -15,20 +16,21 @@ namespace GroupProject.Controllers
         private readonly ApplicationDbContext _db;
         private readonly CompanyRepository _companyRepository;
         private readonly DeveloperRepository _developerRepository;
+        private readonly AddressRepository _addressRepository;
+        private string userId => User.Identity.GetUserId();
 
         public DeveloperProfileController()
         {
             _db = new ApplicationDbContext();
             _companyRepository = new CompanyRepository(_db);
             _developerRepository = new DeveloperRepository(_db);
+            _addressRepository = new AddressRepository(_db);
         }
             
         public ActionResult DeveloperProfilePage()
         {
             var Id = User.Identity.GetUserId();
-
             var developer = _developerRepository.GetDeveloperForProfilePageWithID(Id);
-
             var devViewModel = Mapper.Map<Developer, DeveloperProfilePageViewModel>(developer);
 
             devViewModel.SortExperiencesWithNullsFirst();
@@ -37,11 +39,15 @@ namespace GroupProject.Controllers
             return View(devViewModel);
         }
 
-        public ActionResult AddressForm(AddressProfilePageViewModel a)  
+        public ActionResult AddressForm()  
         {
+            var address = _addressRepository.GetAddressWithId(userId);
+
+            AddressProfilePageViewModel a = Mapper.Map<Address, AddressProfilePageViewModel>(address);
+
             //Clears validation messages on first load
             ModelState.Clear();
-           
+
             return PartialView(a);
         }
 
@@ -62,7 +68,6 @@ namespace GroupProject.Controllers
             ModelState.Clear();
             ex.CompaniesToChoose = _companyRepository.GetCompaniesNamesAndIDs();
            
-
             return PartialView(ex);
         }
 
@@ -73,14 +78,9 @@ namespace GroupProject.Controllers
             return PartialView(skills);
         }
 
-
-
         protected override void Dispose(bool disposing)
         {
             _db.Dispose();
         }
-
     }
-
-   
 }

@@ -17,6 +17,5 @@ namespace GroupProject.ApiModels.CompanyDTOs
         public string FounderName { get; set; }
 
         public string Description { get; set; }
-
     }
 }

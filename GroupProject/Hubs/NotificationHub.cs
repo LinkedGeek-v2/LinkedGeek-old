@@ -30,7 +30,6 @@ namespace GroupProject.Hubs
             Clients.Client(connUser.ConnectionID).notifyUser(notification);
         }
 
-
         public override Task OnConnected()
         {
             return base.OnConnected();

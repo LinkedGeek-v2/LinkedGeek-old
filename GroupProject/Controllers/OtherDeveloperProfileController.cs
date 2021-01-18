@@ -23,9 +23,7 @@ namespace GroupProject.Controllers
 
         public ActionResult OtherDeveloperProfilePage(string id)
         {
-
             var developer = _developerRepository.GetDeveloperForProfilePageWithID(id);
-
             var devViewModel = Mapper.Map<Developer, DeveloperProfilePageViewModel>(developer);
 
             devViewModel.SortExperiencesWithNullsFirst();
@@ -33,11 +31,9 @@ namespace GroupProject.Controllers
             return View(devViewModel);
         }
 
-
         protected override void Dispose(bool disposing)
         {
             _db.Dispose();
         }
-
     }
 }

@@ -32,7 +32,7 @@
         return template;
     };
 
-   
+    //DOESNT WORK GAMW THN PANAGIA
     function Grade(education) {
         if (education.Grade) {
             return `<label>Grade:</label>

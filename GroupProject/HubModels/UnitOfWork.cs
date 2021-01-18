@@ -58,7 +58,7 @@ namespace GroupProject.HubModels
                 conUser.ConnectionID = UserConnectionID;
             }
 
-            conUser.IsActive = true;
+
         }
 
         public string ConvertMessageToJson(Message message)
@@ -71,14 +71,16 @@ namespace GroupProject.HubModels
             var folderPath = FindPath.FindOrCreateFolderPath(who, withWhom);
             var filePath = FindPath.GetTxtFileNamesOfFolder(folderPath).ToList();
 
+            //SORT LIST BASED ON NAME OF TXT FILE
+
             if (timesRequested > filePath.Count - 1)
             {
                 return "You got all Chat History!";
             }
 
             var dayHistoryRequested = filePath[filePath.Count - 1 - timesRequested];
-            //var day = dayHistoryRequested.Substring(dayHistoryRequested.Length - 14, dayHistoryRequested.Length - 1);
-
+        
+           
 
             string[] lines = File.ReadAllLines(dayHistoryRequested);
 
@@ -96,9 +98,8 @@ namespace GroupProject.HubModels
                 i += 3;
             }
 
-
             var json = JsonConvert.SerializeObject(messages, Formatting.Indented, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
-            //var json2 = JsonConvert.SerializeObject(day, Formatting.Indented, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+           
             return json;
         }
 
@@ -108,10 +109,9 @@ namespace GroupProject.HubModels
 
         }
 
-
-        public bool UserStatus(string userID)
+        public ConnectedUser UserStatus(string userID)
         {
-            return ConnectedUsers.SingleOrDefault(con => con.UserID == userID).IsActive;
+            return ConnectedUsers.SingleOrDefault(con => con.UserID == userID);
         }
     }
 }

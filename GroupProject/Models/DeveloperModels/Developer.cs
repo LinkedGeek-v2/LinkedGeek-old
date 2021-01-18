@@ -48,12 +48,9 @@ namespace GroupProject.Models.DeveloperModels
         [DisplayFormat(NullDisplayText = "--")]
         public Gender? Gender { get; set; }
 
-
-
         [ForeignKey("CompanyWorking")]
         public string CompanyWorkingId { get; set; }
         public Company CompanyWorking { get; set; }
-
         public ApplicationUser User { get; set; }
 
         public ICollection<Education> Educations { get; set; }

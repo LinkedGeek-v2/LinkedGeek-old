@@ -1,9 +1,5 @@
-﻿using GroupProject.ApiModels.PostsDTOs;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.IO;
-using System.Web;
 
 namespace GroupProject.Models.SharedModels
 {

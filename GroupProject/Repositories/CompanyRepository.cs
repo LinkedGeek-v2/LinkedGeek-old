@@ -29,9 +29,6 @@ namespace GroupProject.Repositories
 
         public Company GetCompanyAndJobs(string userId) => db.Companies.Include(c => c.JobsPosted).SingleOrDefault(c => c.CompanyID == userId);
 
-        public void AddCompany(Company company)
-        {
-            db.Companies.Add(company);
-        }
+        public void AddCompany(Company company) => db.Companies.Add(company);
     }
 }

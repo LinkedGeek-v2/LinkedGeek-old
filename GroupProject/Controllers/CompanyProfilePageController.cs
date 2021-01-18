@@ -97,24 +97,21 @@ namespace GroupProject.Controllers
             return PartialView("../Company/ProfilePage/People", workersViewModel);
         }
 
-
         public ActionResult AddressForm()
         {
-
-
             return PartialView();
         }
-
 
         public ActionResult DetailsForm()
         {
             var company = companyRepository.VanillaCompany(userId);
-
-            CompanyDetailsViewModel a = new CompanyDetailsViewModel();
-            a.CompanyName = company.CompanyName;
-            a.FoundationDate = company.FoundationDate;
-            a.FounderName = company.FounderName;
-            a.Description = company.Description;
+            CompanyDetailsViewModel a = new CompanyDetailsViewModel
+            {
+                CompanyName = company.CompanyName,
+                FoundationDate = company.FoundationDate,
+                FounderName = company.FounderName,
+                Description = company.Description
+            };
 
             return PartialView(a);
         }

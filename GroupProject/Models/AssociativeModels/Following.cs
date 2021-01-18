@@ -19,9 +19,7 @@ namespace GroupProject.Models.AssociativeModels
         public ApplicationUser Followee { get; set; }
 
         public Following()
-        {
-
-        }
+        { }
 
         public Following(string FollowerID, string FolloweeID)
         {

@@ -39,7 +39,6 @@ namespace GroupProject.Controllers.api
         public IHttpActionResult ChatFollowers()
         {
             var userId = User.Identity.GetUserId();
-
             var chatFollowees = context.Followings
                  .Where(f => f.FollowerID == userId)
                  .Select(f => f.Followee)
@@ -68,7 +67,6 @@ namespace GroupProject.Controllers.api
         {
             var UserId = id ?? User.Identity.GetUserId();
             var Followees = repository.Followees(UserId).ToList();
-
             var UserDtos = MapToDto(Followees);
 
             return UserDtos;
@@ -80,7 +78,6 @@ namespace GroupProject.Controllers.api
         {
             var UserId = id ?? User.Identity.GetUserId();
             var Followers = repository.Followees(UserId);
-
             var dtos = MapToDto(Followers).ToList();
 
             return dtos;
@@ -91,18 +88,13 @@ namespace GroupProject.Controllers.api
         public IEnumerable Recommended()
         {
             var UserId = User.Identity.GetUserId();
-
             var recommended=repository.StrongOfStrongFollowees(UserId);
             if (recommended.Count() == 0)
                 recommended = repository.AllFolloweesExceptMine(UserId);
 
-            //var recommended = repository.AllFollowesExceptMine(UserId);
-
             var dtos = MapToDto(recommended);
 
             return dtos;
-
-            //return recommended;
         }
 
         [HttpDelete]
@@ -114,10 +106,11 @@ namespace GroupProject.Controllers.api
             {
                 unitOfWork.Save();
                 return Ok();
-            }
-                
+            }             
             else
+            {
                 return NotFound();
+            }           
         }
 
         [HttpPost]
@@ -131,7 +124,9 @@ namespace GroupProject.Controllers.api
                 return Ok();
             }
             else
+            {
                 return NotFound();
+            }              
         }
 
         [HttpPost]

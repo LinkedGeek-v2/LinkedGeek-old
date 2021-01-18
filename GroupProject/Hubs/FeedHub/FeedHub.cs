@@ -18,13 +18,11 @@ namespace GroupProject.Hubs.FeedHub
         UserRepository repository = new UserRepository(new ApplicationDbContext());
 
         public static Dictionary<string, string> ConnectionMap = new Dictionary<string, string>();
-
         public static Dictionary<string, string> VisitorsMap = new Dictionary<string, string>();
 
         private string CurrentUserID => Context.User.Identity.GetUserId();
         private string CurrentUserConnectionID => Context.ConnectionId;
         private string CurrentUserName => Context.User.Identity.Name;
-
 
 
         public void Send(PostViewModel post)
@@ -51,7 +49,6 @@ namespace GroupProject.Hubs.FeedHub
                 if (ConnectionMap.ContainsKey(follower.Id))
                     if (ConnectionMap[follower.Id] != null)
                         followersConnStrings.Add(ConnectionMap[follower.Id]);
-
 
             return followersConnStrings;
         }
@@ -118,7 +115,6 @@ namespace GroupProject.Hubs.FeedHub
         //        }
         //    }
         //}
-
 
         public override Task OnReconnected()
         {

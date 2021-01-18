@@ -70,6 +70,7 @@ namespace GroupProject.App_Start
             CreateMap<Skill, SkillProfilePageViewModel>();
             CreateMap<DeveloperSkills, DeveloperSkillsProfilePageViewModel>();
             CreateMap<Company, CompanyNamesForDeveloperProfileViewModel>();
+            CreateMap<Address, AddressProfilePageViewModel>();
 
             //Incoming Dtos
 

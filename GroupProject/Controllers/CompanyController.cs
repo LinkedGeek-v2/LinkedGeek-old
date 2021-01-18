@@ -4,11 +4,8 @@ using GroupProject.Models.CompanyModels;
 using GroupProject.Persistence;
 using GroupProject.Repositories;
 using GroupProject.ViewModels.CompanyViewModels;
-using Microsoft.AspNet.Identity;
 using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 
 namespace GroupProject.Controllers
@@ -19,8 +16,6 @@ namespace GroupProject.Controllers
         private readonly CompanyRepository companyRepository;
         private readonly UnitOfWork unitOfWork;
 
-        private string userId => User.Identity.GetUserId();
-
         public CompanyController()
         {
             db = new ApplicationDbContext();
@@ -28,18 +23,21 @@ namespace GroupProject.Controllers
             unitOfWork = new UnitOfWork(db);
         }
 
-        public ActionResult CreateCompany()
-        {
-            return View("CompanyForm");
 
+        public ActionResult CreateCompany(string userId)
+        {
+            var viewModel = new CompanyFormViewModel(userId);
+
+            return View("CompanyForm", viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateCompany(CompanyFormViewModel viewModel)
         {
+            if (!ModelState.IsValid) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
             var company = Mapper.Map<CompanyFormViewModel, Company>(viewModel);
-            company.CompanyID = userId;
             try
             {
                 companyRepository.AddCompany(company);
@@ -52,9 +50,7 @@ namespace GroupProject.Controllers
                 return View("CompanyForm");
             }
         }
-
        
-
         protected override void Dispose(bool disposing)
         {
             db.Dispose();
