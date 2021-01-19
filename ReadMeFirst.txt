@@ -6,5 +6,5 @@ Steps:
 on 1st line of scripts)
 4)Every account Username is the email and password is Password1!
 5) Log in with Lee Simmons to check chat history
-
+6) Only strong followers can chat with each other and view each other posts.(Strong follower are users that both follow each other)
 
