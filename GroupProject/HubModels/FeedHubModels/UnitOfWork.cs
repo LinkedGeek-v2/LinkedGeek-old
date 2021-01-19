@@ -23,7 +23,6 @@ namespace GroupProject.HubModels.FeedHubModels
                 conUser.ConnectionID = UserConnectionID;
             }
 
-            conUser.IsActive = true;
 
         }
 

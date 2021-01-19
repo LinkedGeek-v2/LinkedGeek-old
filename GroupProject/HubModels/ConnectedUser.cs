@@ -7,7 +7,6 @@ namespace GroupProject.HubModels
         public string UserID { get; private set; }
         public string UserName { get; set; }
         public string ConnectionID { get;set; }
-        public bool IsActive { get; set; }
 
         private ConnectedUser() { }
 
@@ -16,7 +15,6 @@ namespace GroupProject.HubModels
             UserID = userId;
             UserName = userName;
             ConnectionID = connectionID;
-            IsActive = true;
         }
 
         public static ConnectedUser CreateConnectedUser(string UserID,string UserName, string ConnectionID) =>  new ConnectedUser(UserID,UserName,ConnectionID);

@@ -266,11 +266,13 @@
     <Compile Include="DAL\ApplicationDbContext.cs" />
     <Compile Include="Enums\Gender.cs" />
     <Compile Include="Enums\WorkingType.cs" />
+    <Compile Include="Extensions\FileNamesOrderByDate.cs" />
     <Compile Include="Extensions\NullsFirstComparer.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HubModels\ConnectedUser.cs" />
+    <Compile Include="HubModels\FeedHubModels\UnitOfWork.cs" />
     <Compile Include="HubModels\FindPath.cs" />
     <Compile Include="HubModels\Message.cs" />
     <Compile Include="HubModels\UnitOfWork.cs" />
@@ -363,7 +365,6 @@
     <Content Include="ChatLogs\00083555-5143-414d-8810-239f4667528c0ca086b7-6036-4ebc-ae2a-4533e77c991f\08.01.2021.txt" />
     <Content Include="ChatLogs\00083555-5143-414d-8810-239f4667528c0ca086b7-6036-4ebc-ae2a-4533e77c991f\09.01.2021.txt" />
     <Content Include="ChatLogs\00083555-5143-414d-8810-239f4667528c0ca086b7-6036-4ebc-ae2a-4533e77c991f\1.4.2021.txt" />
-    <Content Include="ChatLogs\d994ead8-d29a-4d89-9f45-a01680ccf713069bf999-11e8-40d7-8bd6-4877e9bc50ee\1.8.2021.txt" />
     <Content Include="ChatLogs\d994ead8-d29a-4d89-9f45-a01680ccf713069bf999-11e8-40d7-8bd6-4877e9bc50ee\12.25.2020.txt" />
     <Content Include="ChatLogs\d994ead8-d29a-4d89-9f45-a01680ccf713069bf999-11e8-40d7-8bd6-4877e9bc50ee\12.26.2020.txt" />
     <Content Include="ChatLogs\d994ead8-d29a-4d89-9f45-a01680ccf713069bf999-11e8-40d7-8bd6-4877e9bc50ee\12.28.2020.txt" />

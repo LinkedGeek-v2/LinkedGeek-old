@@ -25,11 +25,11 @@ namespace GroupProject.Hubs
         public void SendMsg(string receiverID, string message)
         {
 
-            if (message.Contains("<script>"))
+            if (message.Contains("<script>") || string.IsNullOrEmpty(message))
             {
                 //do nothing 
             }
-            else if(!string.IsNullOrEmpty(message))
+            else 
             {
                 var messageObj = Message.CreateMessage(CurrentUserName, message);
 

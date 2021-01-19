@@ -1,8 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using GroupProject.Extensions;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace GroupProject.HubModels
@@ -69,37 +68,29 @@ namespace GroupProject.HubModels
         public string GetListOfMessagesJson(string who, string withWhom, int timesRequested)
         {
             var folderPath = FindPath.FindOrCreateFolderPath(who, withWhom);
-            var filePath = FindPath.GetTxtFileNamesOfFolder(folderPath).ToList();
+            var filePaths = FindPath.GetTxtFileNamesOfFolder(folderPath).ToList();
 
-            //SORT LIST BASED ON NAME OF TXT FILE
 
-            if (timesRequested > filePath.Count - 1)
+          
+       
+
+            //if count is 0 it means users havent chatted at all and  it should return a different message
+            if (filePaths.Count == 0 || timesRequested > filePaths.Count - 1 )
             {
                 return "You got all Chat History!";
             }
 
-            var dayHistoryRequested = filePath[filePath.Count - 1 - timesRequested];
-        
-           
+            //SORT LIST BASED ON NAME OF TXT FILE
+            var orderedFilePaths = filePaths.OrderBy(fp => fp , new FileNamesOrderByDate<string>()).ToList();
 
-            string[] lines = File.ReadAllLines(dayHistoryRequested);
+            //Get Requested History
+            var dayHistoryRequested = orderedFilePaths[orderedFilePaths.Count - 1 - timesRequested];
 
-            List<Message> messages = new List<Message>();
+            //Get Messages In File
+            var messages = Message.GetMessages(dayHistoryRequested);
 
-            for (int i = 0; i < lines.Length - 1;)
-            {
-                Message a = new Message
-                {
-                    FromUserName = lines[i],
-                    MessageContent = lines[i + 1],
-                    TimeSent = DateTime.Parse(lines[i + 2])
-                };
-                messages.Add(a);
-                i += 3;
-            }
-
+            //Convert them to JSON
             var json = JsonConvert.SerializeObject(messages, Formatting.Indented, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
-           
             return json;
         }
 
