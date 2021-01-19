@@ -8,7 +8,7 @@ namespace GroupProject.HubModels
 {
     public sealed class UnitOfWork
     {
-        private static readonly List<ConnectedUser> ConnectedUsers;                                 //readonly???
+        private static  List<ConnectedUser> ConnectedUsers;                                 //readonly???
         private static UnitOfWork _unitOfWork;
 
         static UnitOfWork()
