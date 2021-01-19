@@ -8,7 +8,7 @@ namespace GroupProject.HubModels
 {
     public sealed class UnitOfWork
     {
-        private static List<ConnectedUser> ConnectedUsers;                                 //readonly???
+        private static readonly List<ConnectedUser> ConnectedUsers;         //readonly locks only the reference of the obj                        
         private static UnitOfWork _unitOfWork;
 
         static UnitOfWork()
@@ -56,8 +56,6 @@ namespace GroupProject.HubModels
             {
                 conUser.ConnectionID = UserConnectionID;
             }
-
-
         }
 
         public string ConvertMessageToJson(Message message)
