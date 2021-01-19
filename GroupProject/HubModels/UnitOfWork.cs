@@ -8,7 +8,7 @@ namespace GroupProject.HubModels
 {
     public sealed class UnitOfWork
     {
-        private static  List<ConnectedUser> ConnectedUsers;                                 //readonly???
+        private static List<ConnectedUser> ConnectedUsers;                                 //readonly???
         private static UnitOfWork _unitOfWork;
 
         static UnitOfWork()
@@ -70,11 +70,7 @@ namespace GroupProject.HubModels
             var folderPath = FindPath.FindOrCreateFolderPath(who, withWhom);
             var filePaths = FindPath.GetTxtFileNamesOfFolder(folderPath).ToList();
 
-
-          
-       
-
-            //if count is 0 it means users havent chatted at all and  it should return a different message
+            //if count is 0 it means users havent chatted at all and  it should return a different message to do
             if (filePaths.Count == 0 || timesRequested > filePaths.Count - 1 )
             {
                 return "You got all Chat History!";
