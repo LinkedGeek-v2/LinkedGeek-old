@@ -19,21 +19,21 @@ namespace GroupProject.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
         }
 
         public ApplicationSignInManager SignInManager
-        {          
+        {
             get
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -159,7 +159,7 @@ namespace GroupProject.Controllers
                 {
                     //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code , userPassword = model.Password , userName = user.UserName}, protocol: Request.Url.Scheme);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code, userPassword = model.Password, userName = user.UserName }, protocol: Request.Url.Scheme);
                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking here :" + callbackUrl);
 
                     if (model.IsDeveloper)
@@ -185,7 +185,7 @@ namespace GroupProject.Controllers
                 return View("Error");
             }
             var result = await UserManager.ConfirmEmailAsync(userId, code);
-            if(result.Succeeded)
+            if (result.Succeeded)
             {
                 //var user = new ApplicationUser { UserName =  userName , PasswordHash = new PasswordHasher().HashPassword(password) };
                 //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
@@ -361,12 +361,7 @@ namespace GroupProject.Controllers
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Manage");
-            }
-
+        { 
             if (ModelState.IsValid)
             {
                 // Get the information about the user from the external login provider
@@ -375,7 +370,7 @@ namespace GroupProject.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email , IsDeveloper = model.IsDeveloper };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, IsDeveloper = model.IsDeveloper };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
@@ -383,10 +378,10 @@ namespace GroupProject.Controllers
                     if (result.Succeeded)
                     {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                        if(user.IsDeveloper) 
-                            return RedirectToAction("CreateDeveloper", "Developer");
+                        if (model.IsDeveloper)
+                            return RedirectToAction("CreateDeveloper", "Developer", new { userId = user.Id });
                         else
-                            return RedirectToAction("CreateCompany", "Company");
+                            return RedirectToAction("CreateCompany", "Company", new { userId = user.Id });
                     }
                 }
                 AddErrors(result);
@@ -401,11 +396,11 @@ namespace GroupProject.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
-        {   
+        {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
 
             return RedirectToAction("Index", "Home");
-         
+
         }
 
         //
